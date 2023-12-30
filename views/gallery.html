@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Page</title>
+  <link rel="stylesheet" href="gallerycss.css">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="mmm">
+  <div class="mn111">
+    <img src="/images/logo.png" class="imgs1">
+    <h1>AirMagic</h1>
+  </div>
+  <nav>
+    <a style="--i: 1;" href="/Search" class="ln1">Frames</a>
+    <a style="--i: 2;" href="/Customise" class="ln1">Custome</a>
+    <a style="--i: 3;" href="/" class="ln1">AboutUs</a>
+    <a style="--i: 4;" href="/" class="ln1">ContactUs</a>
+    <a style="--i: 5;" href="/Search" class="ln1">Frames</a>
+    <a style="--i: 6;" href="/Search" class="ln1">Custome</a>
+    <a style="--i: 7;" href="/Search" class="ln1">AboutUs</a>
+    <a style="--i: 8;" href="/Search" class="ln1">Contact Us</a>
+
+  </nav>     
+  <div class="mn21">
+    <button class="btn1">
+    <a>Login / </a>
+    <a>Signup</a>
+   </button>
+   <a><i2 class="fa fa-shopping-cart" style="color: black;font-size: 35px;margin-top: 20%;"> </i2></a>
+   <a><i2 class="fa fa-user" style="color: black;font-size: 35px;margin-top: 20%;"> </i2></a>
+  </div>
+  </div>
+</div>
+<div class="mn" id="gallerySection">
+  <h1 class="h">A Journey Of Personalization</h1>
+  <div class="mn1">
+    <!-- Gallery content will be added dynamically here using JavaScript -->
+  </div>
+</div>
+<div class="footer">
+    <div class="f1">
+        <img src="/images/logo.png" alt="logo" class="imgss11"/> 
+    </div>
+    <div class="f2">
+        <h2>Company Name</h2>
+        <p>Contact Us</p>
+        <p>FAQ</p>
+        <p>Services</p>
+    </div>
+    <div class="f2">
+        <h2>Company Name</h2>
+        <p>Contact Us</p>
+        <p>FAQ</p>
+        <p>Services</p>
+    </div>
+    <div class="f2">
+        <h2>Company Name</h2>
+        <p>Contact Us</p>
+        <p>FAQ</p>
+        <p>Services</p>
+    </div>
+</div>
+
+<script>
+    // Sample data for gallery items
+    const galleryItems = [
+    { id: 1, imageUrl: "/images/lib.png", name: "Ganesa Acrylic Designer Name Plate" },
+    { id: 2, imageUrl: "/images/j.jpg", name: "Birds Acrylic Designer Name Plate" },
+    { id: 3, imageUrl: "/images/logo.png", name: "Owl Design Acrylic Designer Name Plate" },
+    { id: 4, imageUrl: "/images/pic.png", name: "Marble Design Acrylic Name Plate" },
+    { id: 5, imageUrl: "/images/128.png", name: "Krishna Acrylic Designer Name Plate" },
+    { id: 6, imageUrl: "/images/lib.png", name: "Cream Glass Ball Design Acrylic Name Plate" }
+  ];
+
+  // Function to create a gallery item
+  function createGalleryItem(item) {
+    const div = document.createElement('div');
+    div.classList.add('mn11');
+    div.style.setProperty('--i', item.id);
+
+    const img = document.createElement('img');
+    img.src = item.imageUrl;
+    img.alt = 'logo';
+    img.classList.add('imgg1');
+
+    const addToCartBtn = document.createElement('button');
+    addToCartBtn.innerHTML = 'ADD TO CART';
+    addToCartBtn.addEventListener('click', () => addToCart(item.imageUrl));
+
+    const p = document.createElement('p');
+    p.textContent = item.name;
+
+    div.appendChild(img);
+    div.appendChild(addToCartBtn);
+    div.appendChild(p);
+
+    return div;
+  }
+
+  // Function to add gallery items to the HTML
+  function addGalleryItemsToHTML() {
+    const gallerySection = document.getElementById('gallerySection');
+    const galleryContainer = gallerySection.querySelector('.mn1');
+
+    galleryItems.forEach(item => {
+      const galleryItem = createGalleryItem(item);
+      galleryContainer.appendChild(galleryItem);
+    });
+  }
+
+  // Initial call to add gallery items to the HTML
+  addGalleryItemsToHTML();
+  // Sample image URLs
+  
+
+  // Function to handle adding an image to the cart
+  function addToCart(imageUrl) {
+      fetch('/addToCart', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imageUrl }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+</script>
+</body>
+</html>
+
