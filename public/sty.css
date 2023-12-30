@@ -1,0 +1,282 @@
+.navbar .nav-item button {
+    background-color: #343a40;
+    border: none;
+}
+
+.navbar .nav-link {
+    color: white;
+    text-decoration: none;
+}
+
+#image {
+    display: flex;
+    align-items: center;
+}
+
+#im {
+    margin: 0 10px;
+}
+
+#pic {
+    background-color: #333;
+    padding: 20px;
+}
+
+#grid {
+    height: 520px;
+    width: 620px;
+    background-color: grey;
+}
+
+.image-preview {
+    max-width: 100%;
+}
+
+#cal {
+    background-color: white;
+    padding: 20px;
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.button {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.active-button {
+    background-color: #007BFF; /* Change the background color to the active color */
+    color: #fff; /* Change the text color to white */
+    /* Add any other styles you want for the active button */
+}
+
+#openPopupButton {
+    background-color: yellow;
+}
+
+#openModalButton {
+    background-color: #e3362c;
+}
+.buttond {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#label {
+    display: inline-block;
+    background-color: #343a40;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+input[type="number"] {
+    width: 50px;
+    padding: 5px;
+}
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Center the button */
+.form-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for the button when hovered over */
+.form-button:hover {
+    background-color: #0056b3;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    z-index: 1;
+}
+
+/* Styling for the popup */
+.popup {
+    display: none;
+    position: fixed;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
+    gap: 10px; /* Add a gap between grid items */
+
+}
+.bring-front {
+    display: flex;
+    padding-left: 200px;
+    justify-content: center;
+    align-items: center;
+}
+.buttons{
+    margin-left: 500px;
+}
+.move{
+    margin-left: 900px;
+}
+.button {
+    margin-right: 25px; /* Adds 10px of space to the right of each button */
+    
+          border-radius: 30px;
+border: 3px solid #202c2b;
+background: #13ab9e;
+color: #fff;
+background-color: #3498db; /* Active button background color */
+    color: #fff; /* Active button text color */
+}
+
+.button {
+ 
+    
+          border-radius: 30px;
+border: 3px solid #202c2b;
+background: #13ab9e;
+color: #fff;
+background-color: #3498db; /* Active button background color */
+    color: #fff; /* Active button text color */
+}
+.buttond {
+ 
+    
+
+border: 3px solid #202c2b;
+background: #13ab9e;
+color: #fff;
+background-color: #3498db; /* Active button background color */
+    color: #fff; /* Active button text color */
+}
+
+.content {
+    flex: 1;
+}
+footer {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+.image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    width: 600px; /* Set a fixed width for the containers */
+    height: 600px; /* Set a fixed height for the containers */
+}
+h4{
+    text-align: center;
+}
+.image-preview {
+    max-width: 100%;
+    max-height: 100%;
+    background-size: cover;
+    object-fit: cover;
+}
+.img-fax{
+    height:450px;
+    width:400px;
+    background-color:red;
+    background-size: cover;
+    justify-content: center;
+}
+.image-draggable {
+    cursor: move;
+    position: absolute;
+    top: 0;
+    left: 0;
+    user-drag: element;
+}
+.box_sizing{
+    justify-content: center;
+    align-items: center;
+    display: inline-block;
+    margin: 10px;
+    border: 1px solid #000;
+}
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.button-1{
+    width: 100px;
+    height: 50px;
+    background-color: #f1f1f1; /* Light background color */
+    color: #333; /* Dark text color */
+    border: 2px solid #333; /* Neat border */
+    cursor: pointer;
+}
+
+.button.active {
+    background-color: #3498db; /* Active button background color */
+    color: #fff; /* Active button text color */
+    border: 2px solid #3498db; /* Active button border */
+}
+
+.pay {
+    margin-top: 20px;
+    font-size: 20px;
+}

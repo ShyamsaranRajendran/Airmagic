@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cartcss.css" >
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var imageArray = {
+                '12x8': '/images/128.png',
+                '14x10': '/images/1014.png',
+                '17x12': '/images/1217.png',
+                '20x14': '/images/1420.png',
+                '36x24': '/images/2436.png'
+            };
+            $(".btn12").click(function () {
+                updateSelectedSize($(this).text());
+            });
+            $(".btn14").click(function () {
+                updateSelectedShape($(this).text());
+            });
+            function updateSelectedSize(selectedSize) {
+                $(".btn12").removeClass("active");
+                $(`.btn12:contains(${selectedSize})`).addClass("active");
+                $(".selected-size").text("Selected size : " + selectedSize + " Inch");
+                $(".imgs12").attr("src", imageArray[selectedSize]);
+            }
+            function updateSelectedShape(selectedShape) {
+                $(".btn14").removeClass("active");
+                $(`.btn14:contains(${selectedShape})`).addClass("active");
+                $(".selected-shape").text("Selected shape : " + selectedShape);
+            }
+        });
+    </script>
+</head>
+<body>
+ <div class="mn">
+  <div class="mnn1">
+    <div class="mn1">
+        <img src="/images/logo.png" class="imgs1">
+        <h1>AirMagic</h1>
+      </div>
+      <div class="mn2">
+        
+        <button class="btn1"  onclick="window.location.href = '/login'">
+          <a href="login">
+          <a>Login / </a>
+          <a>Signup</a>
+          </a>
+       </button>
+      
+       <a><i1 class="fa fa-shopping-cart" style="color: black;font-size: 25px;margin-top: 30%;"> </i1></a>
+      </div>
+    </div>
+      <nav>
+        <a style="--i: 1;" href="/Search" class="ln1">Frames</a>
+        <a style="--i: 2;" href="/Customise" class="ln1">Custome</a>
+        <a style="--i: 3;" href="/" class="ln1">AboutUs</a>
+        <a style="--i: 4;" href="/" class="ln1">ContactUs</a>
+        <a style="--i: 1;" href="/Search" class="ln1">Frames</a>
+        <a style="--i: 1;" href="/Search" class="ln1">Custome</a>
+        <a style="--i: 1;" href="/Search" class="ln1">AboutUs</a>
+        <a style="--i: 1;" href="/Search" class="ln1">Contact Us</a>
+
+      </nav>     
+      </div>
+      <div class="mn3">
+        <div class="mn31">
+            <img src="/images/128.png" class="imgs12">
+        </div>
+        <div class="mn311">
+        <div class="mn32">
+            <h2 style="font-family: 'Oswald', sans-serif;">LANDSCAPE ACRYLIC FRAME</h2>
+            <h3>Acrylic Size (Inch)</h3>
+        </div>
+        <div class="mn33">
+            <button class="btn12" type="submit">12x8</button>
+            <button class="btn12" type="submit">14x10</button>
+            <button class="btn12" type="submit">17x12</button>
+            <button class="btn12" type="submit">20x14</button>
+            <button class="btn12" type="submit">36x24</button>
+        </div>
+        <h3>Shapes : </h3>
+        <div class="mn331">
+          <button class="btn14" type="submit">Square</button>
+          <button class="btn14" type="submit">Rectangle</button>
+          <button class="btn14" type="submit">Triangle</button>
+          <button class="btn14" type="submit">Circle</button>
+        </div>
+        <div class="mn34">
+            <p class="selected-size">Selected size : 12x8 Inch</p>
+            <p class="selected-shape">Selected shape : Square</p>
+            <p>Thickness : 3 MM</p>
+            <p>Mounting Method : Adhesive Tape</p>
+        </div>
+        <div class="mn35">
+            <h1 style="font-family: 'Oswald', sans-serif;">Total : ₹599</h1>
+        </div>
+        <div class="mn36">
+            <button type="submit" class="btn13" >
+                Buy Now
+            </button>
+        </div>
+    </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="fn">
+      <h1 style="font-family: 'Oswald', sans-serif;">Product Details</h1>
+      <div class="fn1">
+        <img src="/images/lib.png" class="imgss11">
+        <div class="fn11">
+        <h2 style="font-family: 'Oswald', sans-serif;">PRINT QUALITY</h2>
+        <p>We use variable dot technology and 7-colour pigment-based inks to deliver the sharpest print possible, with no colour banding, no missing dots, and no streaks.
+          In order to get the most value from our Acrylic Photo wall Frame, the user must also provide high quality photos.
+          Note: Social media sites (e.g. WhatsApp) compress the original image and remove important raw meta data. We recommend uploading directly from your smartphone or camera.</p>
+        </div>
+        </div>
+      <div class="fn1">
+        <img src="/images/lib.png" class="imgss11">
+        <div class="fn11">
+        <h2 style="font-family: 'Oswald', sans-serif;">EASY TO INSTALL</h2>
+        <p>We use variable dot technology and 7-colour pigment-based inks to deliver the sharpest print possible, with no colour banding, no missing dots, and no streaks.
+          In order to get the most value from our Acrylic Photo wall Frame, the user must also provide high quality photos.
+          Note: Social media sites (e.g. WhatsApp) compress the original image and remove important raw meta data. We recommend uploading directly from your smartphone or camera.</p>
+        </div>
+        </div>
+      <div class="fn1">
+        <img src="/images/lib.png" class="imgss11">
+        <div class="fn11">
+        <h2 style="font-family: 'Oswald', sans-serif;">GLASS LIKE OPTICAL QUALITY</h2>
+        <p>We use variable dot technology and 7-colour pigment-based inks to deliver the sharpest print possible, with no colour banding, no missing dots, and no streaks.
+          In order to get the most value from our Acrylic Photo wall Frame, the user must also provide high quality photos.
+          Note: Social media sites (e.g. WhatsApp) compress the original image and remove important raw meta data. We recommend uploading directly from your smartphone or camera.</p>
+      </div>
+    </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="gn">
+      <div class="gn1">
+        <h1 style="font-family: 'Oswald', sans-serif;color: red;">AIRMAGIC<br>PROMISE </h1>
+        <p>We stand behind every product we make. If our products fail to live up to your standards, you can return them for a replacement or refund. </p>
+      </div>
+      <div class="gn2">
+        <h1 style="font-family: 'Oswald', sans-serif;color: blue;">FREE SHIPPING </h1>
+        <p>About shipping charges, No worries its completely on us</p>
+      </div>
+      <div class="gn2">
+        <h1 style="font-family: 'Oswald', sans-serif;color: rgb(29,170,162);">30 DAYS EASY RETURNS</h1>
+        <p>We Provide 30 days hassle free returns & refunds.</p>
+      </div>
+      <div class="gn2">
+        <h1 style="font-family: 'Oswald', sans-serif;color: orange;">10% CASHBACK </h1>
+        <p>With every order placed, you'll receive 10% cashback</p>
+      </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="pay">
+      <h1 style="font-family: 'Oswald', sans-serif;">100% Secure Payment</h1>
+      <div class="pay1">
+        <img src="/images/google-pay-icon.png" class="svgs">
+        <img src="/images/phonepe-icon.png"    class="svgs">
+        <img src="/images/paytm-icon.png"      class="svgs">
+        <img src="/images/upi-payment-icon.png"class="svgs">
+        <img src="/images/visa-icon.png"       class="svgs">
+        <img src="/images/master-card-icon.png"class="svgs">
+        <img src="/images/maestro-icon.png"    class="svgs">
+      </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="footer">
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">COMPANY</h1>
+        <a>About Us</a>
+        <a>Privacy Policy</a>
+        <a>T&C's</a>
+        <a>Refer & Earn</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">SUPPORT</h1>
+        <a>Contact Us</a>
+        <a>Track Order</a>
+        <a>Return Order</a>
+        <a>FAQ's</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">MORE INFO</h1>
+        <a>My Account</a>
+        <a>Order History</a>
+        <a>Your Credits</a>
+      </div>
+    </div>
+</body>
+</html>
