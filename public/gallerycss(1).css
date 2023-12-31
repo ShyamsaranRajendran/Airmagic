@@ -1,0 +1,264 @@
+*{
+    font-family: 'Poppins';
+    
+}
+body{
+    background-color: #d5d3bc;
+}
+.mmm{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 30px;
+}
+.mn{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 20px;
+    
+}
+.mn111{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: rgb(0, 0, 0);
+}
+.imgs1{
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+.mn21{
+    margin-top: 2%;
+    color: #d5d3bc;
+    display: flex;
+    gap: 20px;
+}
+.mn21 a{
+    font-size: 11px;
+    color: #d5d3bc;
+}
+.mn21 a:hover{
+    color: rgb(240, 240, 240);
+}
+nav {
+    padding-top: 30px;
+    margin-top: 1%;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: fit-content;
+    border-radius: 50px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    height: 60px;
+}
+
+nav a {
+    position: relative;
+    padding: 11px;
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    overflow: hidden;
+}
+
+nav a::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: black;
+    transition: width 400ms ease-in-out;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+
+.btn1{
+    background-color: rgb(0, 0, 0);
+    border: 1.5px solid black;
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    transition: 500ms;
+}
+.btn1:hover{
+    transform: scale(1.03);
+}
+.h{
+   text-align: center;
+}
+.mn1{
+    width: fit-content;
+    height: auto;
+    margin-top: -1%;
+    margin-left: 2%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0;
+    border-radius: 15px;  
+    padding-left: 15%;
+    padding-right: 15%;
+} 
+.mn h1{
+    width: 100%;
+    text-align: center;
+    font-family: 'Poppins';
+    font-weight: 900;
+    transition: 5s;
+    opacity: 0;
+    animation: slideRight 3s ease forwards;
+    font-size: 40px;
+    margin-top: 3%;
+}
+.icn1{
+    margin-left: 2%;
+    font-size: 23px;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0;
+    animation: slideLeft 1.5s ease forwards;
+    display: inline-block;
+}
+.imgg1{
+    width: 300px;
+    height: 290px;
+    border-top-right-radius: 8px ;
+    border-top-left-radius: 8px ;
+}
+.mn11{
+    width: 300px;
+    height: 370px;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 300ms;
+    opacity: 0;
+    animation: slideTop 0.6s ease forwards;
+    animation-delay: calc(0.5s * var(--i));
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.mn11:hover{
+    transform: scale(1.02);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.mn11 p, .mn11 h3{
+    padding: 0px 15px;
+    text-align: center;
+}
+.mn2{
+    width: 85%;
+    justify-content: center;
+    padding-left: 7%;
+    padding-right: 7%;
+    margin-top: 8%;
+    transition: 0.3s;
+    opacity: 0;
+    animation: slideRight 1.5s ease forwards;
+}
+.mn21{
+    justify-content: center;
+}
+.footer{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color:rgb(44, 44, 44);
+    padding-bottom: 20px;
+    padding-top: 20px;
+    transition: 0.3s;
+    opacity: 0;
+    animation: slideTop 1.5s ease forwards;
+    color: white;
+}
+.f1{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.imgss11{
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    margin-top: 20%;
+}
+
+@media screen and (max-width: 500px){
+    *{
+       overflow-x: auto;
+    }
+    .mn1{
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+}
+@keyframes slideRight {
+    0%{
+       transform: translateX(-100px); 
+       opacity: 0;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes slideTop {
+    0%{
+       transform: translateY(100px); 
+       opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes slideBottom {
+    0%{
+       transform: translateY(-100px); 
+       opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes slideLeft {
+    0%{
+       transform: translateX(100px); 
+       opacity: 0;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+@keyframes zoomIn {
+    0%{
+       transform: scale(0); 
+       opacity: 0;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
