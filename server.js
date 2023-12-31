@@ -9,25 +9,23 @@ app.use(cors());
 const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'gallery')));
+
 app.use(express.json()); // Add this line to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Add this line to parse URL-encoded bodies
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
-// Use express.urlencoded middleware to parse form data
-//app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: '1988',
     resave: false,
     saveUninitialized: true,
   }));
-// Database connection
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 's@r@n1977',
     database: 'sign_in_data'
 });
-
-// Define routes for different pages
+var sub_gal="Gallery_1";
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/index.html');
 });
@@ -56,6 +54,18 @@ app.get('/customize', (req, res) => {
     res.sendFile(__dirname + '/views/customize.html');
 });
 
+app.get('/sub', (req, res) => {
+    res.sendFile(__dirname + '/views/sub-gallery.html');
+});
+
+app.get('/sub-gallery/:table', (req, res) => {
+    sub_gal = req.params.table;
+    // Use the tableName variable to dynamically fetch data from the specified table
+    // and send the appropriate response to the client
+    console.log(`Showing data from table: ${sub_gal}`);
+    res.redirect('/sub');
+});
+
 app.post('/buy-now-item', (req, res) => {
     const imageUrl = req.body.imageUrl;
     const currentDate = new Date();
@@ -77,11 +87,47 @@ app.post('/buy-now-item', (req, res) => {
     });
 });
 
+
+ function fetchGalleryData() {
+  return new Promise((resolve, reject) => {
+    var Gal_id = sub_gal;
+    const query = `SELECT  * FROM ${Gal_id}`;
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('Error querying the database:', err);
+        reject(err);
+      } else {
+        const galleryItems = results.map((item) => ({
+          id: item.id,
+          gallery_url: item.gallery_url, // Assuming the column name is 'imageUrl'
+        }));
+        resolve(galleryItems);
+      }
+    });
+  });
+}
+
+// Endpoint to retrieve gallery data
+app.get('/sub-gallery-img-getter', async (req, res) => {
+  try {
+    const galleryData = await fetchGalleryData(); // Fetch data from the database
+
+    // Modify the data to include both id and gallery_url properties
+    const formattedData = galleryData.map(item => ({
+      id: item.id,
+      gallery_url: item.gallery_url,
+    }));
+
+    res.json(formattedData);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.post('/remove-item', (req, res) => {
     const imageUrl = req.body.imageUrl;
-    const email = req.session.user.username; // Get the email from the session
+    const email = req.session.user.username; 
 
-    // Step 1: Find the user's key
     const query = 'SELECT `key` FROM users WHERE email = ?';
     connection.query(query, [email], (err, results) => {
         if (err) {
@@ -90,9 +136,8 @@ app.post('/remove-item', (req, res) => {
         } else {
             if (results.length > 0) {
                 const userKey = results[0].key;
-                const tableName = userKey; // Use the user's key as the table name
+                const tableName = userKey; 
 
-                // Step 2: Check if the table exists, if not, create it
                 const createTableSQL = `
                     CREATE TABLE IF NOT EXISTS ${tableName} (
                         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -106,7 +151,6 @@ app.post('/remove-item', (req, res) => {
                     } else {
                         console.log(`Table ${tableName} created.`);
 
-                        // Step 3: Delete the image from the user's cart
                         const removeSQL = `DELETE FROM ${tableName} WHERE img_url = ?`;
                         connection.query(removeSQL, [imageUrl], (err, result) => {
                             if (err) {
@@ -149,56 +193,62 @@ app.post('/process-form', (req, res) => {
 app.post('/forgot-password', (req, res) => {
     const userEmail = req.body.forgotEmail;
     const query = 'SELECT * FROM users WHERE email = ?';
-    let pwd;
+
     connection.query(query, [userEmail], (err, results) => {
-      if (err) {
-        console.error('Error querying the database:', err);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-  
-      if (results.length === 1) {
-       
-        pwd= results[0].password;
-
-        // For demonstration purposes only, sending the password (not recommended in production)
-       // res.send(`User found. Password: ${user.password}`);
-        res.redirect('/login');
-      }
-    });
-    // Send reset password email
-    sendResetPasswordEmail(userEmail,pwd)
-        .then(() => {
-            res.send('Password reset email sent successfully.');
-        })
-        .catch((error) => {
-            console.error('Error sending email:', error);
+        if (err) {
+            console.error('Error querying the database:', err);
             res.status(500).send('Internal Server Error');
-        });
-});
+            return;
+        }
 
-// Function to send reset password email
-function sendResetPasswordEmail(userEmail) {
-    // Configure Nodemailer
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'sarancode6@gmail.com', // Replace with your Gmail email
-            pass: 'your' // Replace with your Gmail password or an app-specific password
+        if (results.length === 1) {
+            const pwd = results[0].password_hash;
+
+            // Send reset password email
+            sendResetPasswordEmail(userEmail, pwd)
+                .then(() => {
+                    // Redirect after successful email sending
+                    res.redirect('/login');
+                })
+                .catch((error) => {
+                    console.error('Error sending email:', error);
+                    res.status(500).send('Internal Server Error');
+                });
+        } else {
+            res.status(404).send('User not found');
         }
     });
+});
 
-    // Email content
+
+// Function to send reset password email
+function sendResetPasswordEmail(userEmail, pwd) {
+    const nodemailer = require('nodemailer');
+    require('dotenv').config(); // Load environment variables from .env file
+
+    // Create a transporter using your Gmail account
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'shyamsaran0206@gmail.com',
+            pass: 'vyki efil wiww ybav',
+        },
+        secure: true,
+        port: 465,
+    });
+
+    // Define the email options
     const mailOptions = {
-        from: 'sarancode6@gmail.com',
-        to: userEmail,
-        subject: 'Password Reset',
-        text: 'You requested a password reset.Your password ${pwd}'
+        from: 'shyamsaran0206@gmail.com',
+        to: userEmail, // Use the provided user email
+        subject: 'Reset Password',
+        text: `Hello, this is a test email from Node.js!${userEmail} Your password is: ${pwd}`,
     };
 
-    // Send email
+    // Return the promise for sending the email
     return transporter.sendMail(mailOptions);
 }
+
 
 const userSessions = {};
 

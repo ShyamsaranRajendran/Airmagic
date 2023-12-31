@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Page</title>
+  <link rel="stylesheet" href="gallerycss(1).css">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="mmm">
+    <div class="mn111">
+      <img src="/images/logo.png" class="imgs1" alt="Logo">
+      <h1>AirMagic</h1>
+    </div>
+    <nav>
+      <a style="--i: 1;" href="/" class="ln1">Home</a>
+      <a style="--i: 2;" href="/customize" class="ln1">Custome</a>
+      <a style="--i: 3;" href="/about-us" class="ln1">AboutUs</a>
+      <a style="--i: 4;" href="/" class="ln1">Contact Us</a>
+      <a style="--i: 1;" href="/add" class="ln1">Cart </a>
+      <a style="--i: 1;" href="/gallery" class="ln1">Gallery </a>
+     
+    </nav>
+    <div class="mn21">
+      <button class="btn1" type="button"><a class="nav-link" href="logout">Logout</a></button>
+
+    </div>
+  </div>
+
+  <div class="mn">
+    <h1 class="h">A Journey Of Personalization </h1>
+    <div class="mn1" id="gallerySection">
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="f1">
+      <img src="/images/logo.png" alt="Logo" class="imgss11" />
+    </div>
+    <div class="f2">
+      <h2>Company Name</h2>
+      <p>Contact Us</p>
+      <p>FAQ</p>
+      <p>Services</p>
+    </div>
+    <div class="f2">
+      <h2>Company Name</h2>
+      <p>Contact Us</p>
+      <p>FAQ</p>
+      <p>Services</p>
+    </div>
+    <div class="f2">
+      <h2>Company Name</h2>
+      <p>Contact Us</p>
+      <p>FAQ</p>
+      <p>Services</p>
+    </div>
+  </div>
+
+  <script>
+    function createGalleryItem(item) {
+    const div = document.createElement('div');
+    div.classList.add('mn11');
+    div.style.setProperty('--i', item.id);
+
+    const img = document.createElement('img');
+    img.src = item.gallery_url;
+    img.alt = 'Image';
+    img.classList.add('imgg1');
+
+    const addToCartBtn = document.createElement('button');
+    addToCartBtn.innerHTML = 'ADD TO CART';
+    addToCartBtn.addEventListener('click', () => addToCart(item.gallery_url));
+
+    div.appendChild(img);
+    div.appendChild(addToCartBtn);
+
+    return div;
+  }
+  function addGalleryItemsToHTML(items) {
+  const gallerySection = document.getElementById('gallerySection');
+  items.forEach(item => {
+    const galleryItem = createGalleryItem(item);
+    gallerySection.appendChild(galleryItem);
+  });
+}
+
+// Fetch gallery items from the server
+fetch('/sub-gallery-img-getter')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    addGalleryItemsToHTML(data);
+  })
+  .catch(error => {
+    console.error('Error fetching gallery items:', error);
+  });
+
+     
+    // Function to handle adding an image to the cart
+    function addToCart(imageUrl) {
+      fetch('/addToCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ img_url: imageUrl }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  
+ 
+  </script>
+</body>
+</html>
+
