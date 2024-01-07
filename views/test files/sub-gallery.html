@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="viewcss.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mmm">
+        <div class="mmm1">
+            <div class="mn111">
+                <img src="/images/logo.png" class="imgs1">
+                <h1>AirMagic</h1>
+            </div>
+            <div class="mn21">
+                <button class="btn1">
+                    <a>Login / </a>
+                    <a>Signup</a>
+                </button>
+                <a><i2 class="fa fa-shopping-cart" style="color: black;font-size: 25px;margin-top: 35%;"> </i2></a>
+                <a><i2 class="fa fa-user" style="color: black;font-size: 25px;margin-top: 35%;"> </i2></a>
+            </div>
+        </div>
+        <nav>
+            <a style="--i: 1;" href="/Search" class="ln1">Frames</a>
+            <a style="--i: 2;" href="/Customise" class="ln1">Custome</a>
+            <a style="--i: 3;" href="/" class="ln1">AboutUs</a>
+            <a style="--i: 4;" href="/" class="ln1">ContactUs</a>
+            <a style="--i: 5;" href="/Search" class="ln1">Frames</a>
+            <a style="--i: 6;" href="/Search" class="ln1">Custome</a>
+            <a style="--i: 7;" href="/Search" class="ln1">AboutUs</a>
+            <a style="--i: 8;" href="/Search" class="ln1">Contact Us</a>
+        </nav>     
+    </div>
+    </div>
+    </div>
+    <h1 style="text-align: center; font-size: 40px;font-family:'Oswald';">Acrylic Photo Frames</h1>
+    <div class="ac" id="acContainer"></div>
+
+    <script>
+      function createProductElement(item) {
+          // Create a div with class "ac1"
+          const ac1Element = document.createElement("div");
+          ac1Element.className = "ac1";
+  
+          // Create an image (img) element with src and alt
+          const imgElement = document.createElement("img");
+          imgElement.src = item.gallery_url;
+          imgElement.alt = "No img";
+          imgElement.className = "pt1";
+  
+          // Create an h3 element with text content
+          const h3Element = document.createElement("h3");
+          h3Element.textContent = "Image";
+  
+          // Create a button element with text content
+          const buttonElement = document.createElement("button");
+          buttonElement.type = "submit";
+          buttonElement.className = "bn1";
+          buttonElement.textContent = `Buy Now: $599`;
+  
+          // Append the img, h3, and button elements to the div element
+          ac1Element.appendChild(imgElement);
+          ac1Element.appendChild(h3Element);
+          ac1Element.appendChild(buttonElement);
+  
+          return ac1Element;
+      }
+  
+      function addProductsToContainer(container, items) {
+          // Loop through the items and create elements dynamically
+          items.forEach(item => {
+              const productElement = createProductElement(item);
+              container.appendChild(productElement);
+          });
+      }
+  
+      // Fetch gallery items from the server
+      fetch('/sub-gallery-img-getter')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          
+          // Call the function to add products to the container
+          addProductsToContainer(acContainer, data);
+        })
+        .catch(error => {
+          console.error('Error fetching gallery items:', error);
+        });
+  
+
+  </script>
+  
+     <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+     <div class="pay">
+       <h1 style="font-family: 'Oswald', sans-serif;">100% Secure Payment</h1>
+       <div class="pay1">
+         <img src="/images/google-pay-icon.png" class="svgs">
+         <img src="/images/phonepe-icon.png"    class="svgs">
+         <img src="/images/paytm-icon.png"      class="svgs">
+         <img src="/images/upi-payment-icon.png"class="svgs">
+         <img src="/images/visa-icon.png"       class="svgs">
+         <img src="/images/master-card-icon.png"class="svgs">
+         <img src="/images/maestro-icon.png"    class="svgs">
+       </div>
+     </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="footer">
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">COMPANY</h1>
+        <a>About Us</a>
+        <a>Privacy Policy</a>
+        <a>T&C's</a>
+        <a>Refer & Earn</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">SUPPORT</h1>
+        <a>Contact Us</a>
+        <a>Track Order</a>
+        <a>Return Order</a>
+        <a>FAQ's</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">MORE INFO</h1>
+        <a>My Account</a>
+        <a>Order History</a>
+        <a>Your Credits</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+    </div>
+</body>
+</html>

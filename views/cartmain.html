@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cartmain.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400&family=Oswald&family=Teko&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mmm">
+        <div class="mmm1">
+            <div class="mn111">
+                <img src="/images/air.png" class="imgs1">
+                <h1>AirMagic</h1>
+            </div>
+            <div class="mn21">
+                <button class="btn1">
+                    <a href="logout">Logout / </a>
+                </button>
+                <a><i2 id="i2" class="fa fa-shopping-cart" style="color: black;font-size: 25px;margin-top: 35%;"> </i2></a>
+                <a><i2 id="i2" class="fa fa-user" style="color: black;font-size: 25px;margin-top: 35%;"> </i2></a>
+            </div>
+        </div>
+        <nav>
+          <a style="--i: 1;" href="/home" class="ln1">Home</a>
+          <a style="--i: 2;" href="/customize" class="ln1">Custome</a>
+          <a style="--i: 3;" href="/about" class="ln1">AboutUs</a>
+          <a style="--i: 4;" href="/" class="ln1">Contact Us</a>
+          <a style="--i: 1;" href="/add" class="ln1">Cart </a>
+          <a style="--i: 1;" href="/gallery" class="ln1">Gallery </a>
+         
+      
+        </nav>     
+    </div>
+    <h1 style="font-family: Oswald;font-weight: 600; text-align: center;font-size: 40px;">Shopping Cart</h1>
+    <div class="cas1">
+      <div class="cas">
+        <h1>Cashback</h1>
+        <p>Cashback on this order is <b>₹60</b></p>
+        <p>(Cashback Will be Added to Your Printshoppy Wallet Within 24 hours of Order Delivery)</p>
+      </div>
+    </div>
+    <div class="cart">
+
+    </div>
+    <script>
+   function createProductElements_1(imageNames) {
+            // Container to hold all product elements
+            const container = document.createElement('div');
+
+            imageNames.forEach(imageName => {
+                const productContainer = document.createElement('div');
+                productContainer.classList.add('s');
+
+                // Create product display section
+                const productDisplay = document.createElement('div');
+                productDisplay.classList.add('sp');
+
+
+          const productImageContainer = document.createElement('div');
+          productImageContainer.classList.add('sp1');
+          const productImage = document.createElement('img');
+          productImage.src = `${imageName.img_url}`;
+          productImage.alt = 'product';
+          productImage.classList.add('pic1');
+          productImageContainer.appendChild(productImage);
+
+          const productDetails = document.createElement('div');
+          productDetails.classList.add('sp2');
+          const productName = document.createElement('h2');
+          productName.style.fontFamily = 'Oswald';
+          productName.textContent = 'Custom Acrylic Photo Frame';
+
+          const productDescription = document.createElement('p');
+          productDescription.textContent = 'Acrylic Photo Frames';
+
+          const productPrice = document.createElement('h2');
+          productPrice.textContent = '₹599 Only';
+
+          const acrylicThickness = document.createElement('p');
+          acrylicThickness.textContent = 'Acrylic Thickness: 3 MM';
+
+          const acrylicSize = document.createElement('p');
+          acrylicSize.textContent = 'Landscape Acrylic Size: 12x8';
+
+          const removeButton = document.createElement('button');
+                removeButton.classList.add('bbtn1');
+                removeButton.type = 'submit';
+                removeButton.textContent = 'Remove Product';
+                removeButton.addEventListener('click', (event) => {
+                    handleRemove(imageName.img_url);
+                    console.log('Remove clicked for image:', imageName.img_url);
+                    window.location.reload();
+                    event.stopPropagation();
+                });
+          productDetails.appendChild(productName);
+          productDetails.appendChild(productDescription);
+          productDetails.appendChild(productPrice);
+          productDetails.appendChild(acrylicThickness);
+          productDetails.appendChild(acrylicSize);
+          productDetails.appendChild(removeButton);
+
+          productDisplay.appendChild(productImageContainer);
+          productDisplay.appendChild(productDetails);
+
+          // Create order summary section
+          const orderSummary = document.createElement('div');
+          orderSummary.classList.add('s1');
+
+          const orderSummaryTitle = document.createElement('h1');
+          orderSummaryTitle.style.color = '#1DAAA1';
+          orderSummaryTitle.textContent = 'ORDER SUMMARY';
+
+          const hr1 = document.createElement('hr');
+          hr1.style.backgroundColor = 'rgb(163, 163, 163)';
+          hr1.style.justifyContent = 'center';
+          hr1.style.textAlign = 'center';
+          hr1.style.width = '100%';
+          hr1.style.height = '2px';
+
+          const subTotal = document.createElement('p');
+          subTotal.textContent = 'Sub-Total  :  ₹599';
+
+          const shippingCharges = document.createElement('p');
+          shippingCharges.textContent = 'Shipping Charges  :  Free';
+
+          const hr2 = document.createElement('hr');
+          hr2.style.backgroundColor = 'rgb(163, 163, 163)';
+          hr2.style.justifyContent = 'center';
+          hr2.style.textAlign = 'center';
+          hr2.style.width = '100%';
+          hr2.style.height = '2px';
+
+          const total = document.createElement('h2');
+          total.textContent = 'Total : ₹599 Only';
+
+          const proceedToBuyButton = document.createElement('button');
+                proceedToBuyButton.classList.add('bbtn12');
+                proceedToBuyButton.type = 'submit';
+                proceedToBuyButton.textContent = 'Proceed to buy (1 Item)';
+                proceedToBuyButton.addEventListener('click', (event) => {
+                    handleBuyNow(imageName.img_url);
+                    console.log('Buy Now clicked for image:', imageName.img_url);
+                    event.stopPropagation();
+                });
+          orderSummary.appendChild(orderSummaryTitle);
+          orderSummary.appendChild(hr1);
+          orderSummary.appendChild(subTotal);
+          orderSummary.appendChild(shippingCharges);
+          orderSummary.appendChild(hr2);
+          orderSummary.appendChild(total);
+          orderSummary.appendChild(proceedToBuyButton);
+
+          // Append product display and order summary to the product container
+      
+          productContainer.appendChild(productDisplay);
+                productContainer.appendChild(orderSummary);
+
+          // Append the product container to the main container
+          container.appendChild(productContainer);
+      });
+
+      return container;
+  }
+  function fetchImageNames() {
+    fetch('/getImages')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok, Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(imageNames => {
+            const cartElement = document.querySelector('.cart');
+            cartElement.innerHTML = '';
+            console.log('Fetched image URLs:', imageNames);
+
+            // Create product elements and append them to the body
+            const productElements = createProductElements_1(imageNames);
+            cartElement.appendChild(productElements);
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+}
+
+  function handleBuyNow(imageUrl) {
+      fetch('/buy-now-item', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imageUrl }),
+      })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`Network response was not ok, Status: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log('Buy Now success:', data);
+              // Optionally, you can perform additional actions after a successful buy
+          })
+          .catch(error => {
+              console.error('Buy Now error:', error);
+          });
+  }
+
+  function handleRemove(imageUrl) {
+      fetch('/remove-item', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ imageUrl }),
+      })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`Network response was not ok, Status: ${response.status}`);
+              }
+
+              return response.json();
+          })
+          .then(data => {
+              console.log('Buy Now success:', data);
+              // Optionally, you can perform additional actions after a successful buy
+          })
+          .catch(error => {
+              console.error('Buy Now error:', error);
+          });
+  }
+
+  // Call the function to fetch and display images
+  fetchImageNames();
+</script>
+  
+<hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+<div class="pay">
+  <h1 style="font-family: 'Oswald', sans-serif;">100% Secure Payment</h1>
+  <div class="pay1">
+    <img src="/images/google-pay-icon.png" class="svgs">
+    <img src="/images/phonepe-icon.png"    class="svgs">
+    <img src="/images/paytm-icon.png"      class="svgs">
+    <img src="/images/upi-payment-icon.png"class="svgs">
+    <img src="/images/visa-icon.png"       class="svgs">
+    <img src="/images/master-card-icon.png"class="svgs">
+    <img src="/images/maestro-icon.png"    class="svgs">
+  </div>
+</div>    
+<hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="footer">
+       <img src="/images/air.png"  alt="logo"  class="air">
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">SUPPORT</h1>
+        <a>Contact Us</a>
+        <a>Track Order</a>
+        <a>Return Order</a>
+        <a>FAQ's</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">MORE INFO</h1>
+        <a>My Account</a>
+        <a>Order History</a>
+        <a>Your Credits</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+    </div>
+</body>
+</html>

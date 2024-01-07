@@ -11,13 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
-            var imageArray = {
-                '12x8': '/images/128.png',
-                '14x10': '/images/1014.png',
-                '17x12': '/images/1217.png',
-                '20x14': '/images/1420.png',
-                '36x24': '/images/2436.png'
-            };
+            
             $(".btn12").click(function () {
                 updateSelectedSize($(this).text());
             });
@@ -52,7 +46,7 @@
       <nav>
         <a style="--i: 1;" href="/" class="ln1">Home</a>
         <a style="--i: 2;" href="/customize" class="ln1">Custome</a>
-        <a style="--i: 3;" href="/about-us" class="ln1">AboutUs</a>
+        <a style="--i: 3;" href="/about" class="ln1">AboutUs</a>
         <a style="--i: 4;" href="/" class="ln1">Contact Us</a>
         <a style="--i: 1;" href="/add" class="ln1">Cart </a>
         <a style="--i: 1;" href="/gallery" class="ln1">Gallery </a>
@@ -61,9 +55,10 @@
       </nav>     
       </div>
       <div class="mn3">
-        <div class="mn31">
-            <img src="/images/128.png" class="imgs12">
+        <div class="mn31" style="background-color: black;">
+          <img id="selectedImage" src="/gallery/gal2/image1.png" class="imgs12">
         </div>
+        
         <div class="mn311">
         <div class="mn32">
             <h2 style="font-family: 'Oswald', sans-serif;">LANDSCAPE ACRYLIC FRAME</h2>
@@ -80,8 +75,6 @@
         <div class="mn331">
           <button class="btn14" type="submit">Square</button>
           <button class="btn14" type="submit">Rectangle</button>
-          <button class="btn14" type="submit">Triangle</button>
-          <button class="btn14" type="submit">Circle</button>
         </div>
         <div class="mn34">
             <p class="selected-size">Selected size : 12x8 Inch</p>
@@ -97,6 +90,13 @@
            <a href="buy-now"><button class="btn13" type="submit">Buy now</button></a>
 
         </div>
+        <div style="padding-top: 10px;">
+        </div>
+        <div class="mn36">
+           
+          <button class="btn13 button--1" type="submit">Add To Cart</button>
+
+       </div>
     </div>
     </div>
     <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
@@ -192,5 +192,37 @@
         <a>Your Credits</a>
       </div>
     </div>
+    <script>
+      // Use window.sessionStorage to access the session variable in the browser
+      const selectedImage = window.sessionStorage.selectedImage || "/gallery/gal2/image1.png";
+      document.getElementById('selectedImage').src = selectedImage;
+  
+      // Function to handle adding an image to the cart
+      function addToCart(imageUrl) {
+          fetch('/addToCart', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ imageUrl }),
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data);
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      }
+  
+      // Assuming there's only one element with the class 'button--1'
+      const addToCartBtn = document.querySelector('.button--1');
+  
+      // Assuming there's only one element with the class 'imgs12'
+      const imgElement = document.querySelector('.imgs12');
+  
+      addToCartBtn.addEventListener('click', () => addToCart(imgElement.src));
+  </script>
+  
 </body>
 </html>
