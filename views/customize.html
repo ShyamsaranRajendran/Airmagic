@@ -9,28 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            
-            $(".btn12").click(function () {
-                updateSelectedSize($(this).text());
-            });
-            $(".btn14").click(function () {
-                updateSelectedShape($(this).text());
-            });
-            function updateSelectedSize(selectedSize) {
-                $(".btn12").removeClass("active");
-                $(`.btn12:contains(${selectedSize})`).addClass("active");
-                $(".selected-size").text("Selected size : " + selectedSize + " Inch");
-                $(".imgs12").attr("src", imageArray[selectedSize]);
-            }
-            function updateSelectedShape(selectedShape) {
-                $(".btn14").removeClass("active");
-                $(`.btn14:contains(${selectedShape})`).addClass("active");
-                $(".selected-shape").text("Selected shape : " + selectedShape);
-            }
-        });
-    </script>
+    
 </head>
 <body>
  <div class="mn">
@@ -192,36 +171,8 @@
         <a>Your Credits</a>
       </div>
     </div>
-    <script>
-      // Use window.sessionStorage to access the session variable in the browser
-      const selectedImage = window.sessionStorage.selectedImage || "/gallery/gal2/image1.png";
-      document.getElementById('selectedImage').src = selectedImage;
-  
-      // Function to handle adding an image to the cart
-      function addToCart(imageUrl) {
-          fetch('/addToCart', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ imageUrl }),
-          })
-          .then(response => response.json())
-          .then(data => {
-              console.log(data);
-          })
-          .catch(error => {
-              console.error('Error:', error);
-          });
-      }
-  
-      // Assuming there's only one element with the class 'button--1'
-      const addToCartBtn = document.querySelector('.button--1');
-  
-      // Assuming there's only one element with the class 'imgs12'
-      const imgElement = document.querySelector('.imgs12');
-  
-      addToCartBtn.addEventListener('click', () => addToCart(imgElement.src));
+    <script src="main-js/customize.js">
+   
   </script>
   
 </body>
