@@ -1,0 +1,302 @@
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Moveable Image Grid Example</title>
+    <style>
+        .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    z-index: 1;
+}
+
+/* Styling for the popup */
+.popup {
+    display: none;
+    position: fixed;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+          #cal
+            {  border: 5px solid black;
+}
+#img
+            {  border: 5px solid black;
+}
+#img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55vh; /* Adjust the height as needed */
+}
+#cursorImage {
+
+    transition: transform 0.3s ease-in-out; /* Add smooth transition */
+}
+#label
+{
+display:block;
+width:100px;
+background:#e3362c;
+color:#fff;
+
+margin:10px auto;
+border-radius:5px;
+cursor: pointer;
+position:relative;
+right:315px;
+top:-40px;
+}
+#imageInput
+{
+display:none;
+}
+
+
+    </style>
+    <link rel="stylesheet" href="sty.css">
+  </head>
+<body>
+  <div class="container-fluid root content">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <button class="rounded bg-dark" type="button">
+                        <a class="nav-link" href="#"><b>Menu</b></a>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="rounded bg-dark" type="button">
+                        <a class="nav-link" href="gallery"><b>Gallery</b></a>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="rounded bg-dark" type="button">
+                        <a class="nav-link" href="customize"><b>Customize</b></a>
+                    </button>
+                </li>
+            </ul>
+            <center>
+                <h2 id="image" class="custom-background" style="color: red;">
+                    <img src="/images/j.jpg" id="im" alt="Avatar" width="90" height="50"/>AIRMAGIC<img
+                    src="/images/j.jpg" id="im" alt="Avatar" width="90" height="50" />
+                </h2>
+            </center>
+            <form class="d-flex">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <button class="rounded bg-dark" type="button"><a class="nav-link" href="add">Cart/$0</a></button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="rounded bg-dark" type="button"><a class="nav-link" href="login">Login</a></button>
+                        <button class="rounded bg-dark" type="button"><a class="nav-link" href="logout">Logout</a></button>
+
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </nav>
+    <p style="background-color: black;">.</p>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="image-grid" id="img">
+                    <div style="height: 520px; width: 620px; background-color: grey;" class="image-container img-fax"
+                        id="grid">
+                        <img class="image-preview" src="/images/pic.png" alt="Image Preview" 
+                            id="cursorImage" ondragstart="return false;" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div id="cal">
+                    <h4 class="text-black">Shape</h4>
+                    <br>
+                    <div class="button-container">
+                        <button class="button bg-dark" onclick="changeheight('rectangle');toggleActive(this)">Rectangle</button>
+                        <button class="button bg-dark" onclick="changeheight('square');toggleActive(this)">Square</button>
+                    </div>
+                    <br>
+                    <h4 class="text-black">Size</h4>
+                    <br>
+                    <div class="button-container">
+                        <button class="button bg-dark" onclick="displayAmount('6x6'); toggleActive(this)"  style="color: red;">6x6</button>
+                        <button class="button bg-dark" onclick="displayAmount('16x12'); toggleActive(this)">16x12</button>
+                        <button class="button bg-dark" onclick="displayAmount('18x12'); toggleActive(this)">18x12</button>
+                        <button class="button bg-dark" onclick="displayAmount('21x15'); toggleActive(this)">21x15</button>
+                        <button class="button bg-dark" onclick="displayAmount('25x25'); toggleActive(this)">25x25</button>
+                        <button class="button bg-dark" onclick="displayAmount('25x30'); toggleActive(this)">25x30</button>
+                    </div>
+                    <br>
+                    <h5 class="text-black" id="price"></h5>
+                    <br>
+                    <h5 class="text-black">Thickness: 3 MM (default)</h5>
+                    <br>
+                    <button id="openPopupButton">Buy Now</button>
+                    <br>
+                   
+                    <br>
+                    <h4 class="text-black" id="amount"></h4>
+                    <br>
+                    <br>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container "style="padding-left: 500px;">
+  <center>
+      <div class="btn-group" style="margin-left: 10px;">
+          <button class="btn buttond bg-dark" onclick="zoomIn()">Zoom In</button>
+          <button class="btn buttond bg-dark" onclick="zoomOut()">Zoom Out</button>
+      </div>
+  </center>
+  <label for="imageInput" id="label" class="btn btn-dark" >Upload</label>
+  <input type="file" id="imageInput" accept="image/*" class="d-none" style="padding-left: 300px;">
+</div>
+
+<br>
+<br>
+<br>
+    
+<footer class="page-footer teal pt-4">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6 mt-md-0 mt-3">
+              <h5 class="text-uppercase font-weight-bold">Customer Care</h5>
+              <ul class="list-unstyled">
+                  <li><a href="#">Contact us</a></li>
+                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Returns & Exchanges</a></li>
+                  <li><a href="#">Shipping & Handling</a></li>
+                  <li><a href="#">Cancelling or Changing</a></li>
+                  <li><a href="#">Terms of Service</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+              </ul>
+          </div>
+          <div class="col-md-6" style="padding-left: 300px;">
+              <h5 class="text-uppercase font-weight-bold">Contact Info</h5>
+              <ul class="list-unstyled">
+                  <li>Contact No: +91 87691-23813</li>
+                  <li>Email: <a href="mailto:shavitha@gmail.com">saranya@gmail.com</a></li>
+                  <li>Address: 123 Main Street<br>Anytown, USA 12345</li>
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <div class="footer-copyright text-center py-3 bg-dark text-light">
+      © 2023 Your Website
+  </div>
+</footer>
+    <script src="./srcp.js">
+    </script>
+    <script>
+  
+    // Your JavaScript code here
+    let str;
+    
+    const s=document.getElementById('amount');
+    function displayAmount(amount) {
+                event.preventDefault();
+
+                str=amount.split('x')
+                document.getElementById('price').textContent="preferred size: "+amount;
+}
+function toggleActive(button) {
+    if (button.classList.contains("active-button")) {
+        button.classList.remove("active-button");
+    } else {
+        button.classList.add("active-button");
+    }
+}
+function openPopup() {
+            // Show the overlay and popup
+            event.preventDefault();
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            // Hide the overlay and popup
+            event.preventDefault();
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+function changeheight(a) {
+                event.preventDefault();
+  const gridContainer = document.getElementById("grid");
+
+
+  if (a==="square") {
+  
+    gridContainer.style.height = "520px"; // Set the new height
+    s.textContent="Amount: $"+parseInt(str[0])*20;
+  } else {
+    gridContainer.style.height = "350px"; // Set a different height
+        s.textContent="Amount: $"+parseInt(str[0])*30;
+  }
+}
+
+
+var zoomFactor = 1.0; // Initial zoom factor
+
+function zoomIn() {
+                event.preventDefault();
+    zoomFactor += 0.1; // Increase zoom factor
+    updateZoom();
+}
+
+function zoomOut() {
+                event.preventDefault();
+    if (zoomFactor > 1.0) {
+        zoomFactor -= 0.1; // Decrease zoom factor, but don't go below 1.0
+        updateZoom();
+    }
+}
+
+function updateZoom() {
+                event.preventDefault();
+    var zoomedImage = document.getElementById("cursorImage");
+    zoomedImage.style.transform = "scale(" + zoomFactor + ")";
+}
+
+//script for add to cart button
+
+document.getElementById("openModalButton").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "block";
+});
+
+// Close the modal
+document.getElementById("closeModal").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "none";
+});
+
+// Close the modal if the user clicks outside the modal
+window.addEventListener("click", function(event) {
+                event.preventDefault();
+    if (event.target == document.getElementById("modal")) {
+        document.getElementById("modal").style.display = "none";
+    }
+});
+
+    
+    </script>
+</body>
+</html>

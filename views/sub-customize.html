@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cartcss.css" >
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+          .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    z-index: 1;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+          #cal
+            {  border: 5px solid black;
+}
+#img
+            {  border: 5px solid black;
+}
+#img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55vh;
+}
+#cursorImage {
+
+    transition: transform 0.3s ease-in-out; 
+}
+#label
+{
+display:block;
+width:100px;
+background:#e3362c;
+color:#fff;
+
+margin:10px auto;
+border-radius:5px;
+cursor: pointer;
+position:relative;
+right:315px;
+top:-40px;
+}
+#imageInput
+{
+display:none;
+}
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            var imageArray = {
+                '12x8': '/images/128.png',
+                '14x10': '/images/1014.png',
+                '17x12': '/images/1217.png',
+                '20x14': '/images/1420.png',
+                '36x24': '/images/2436.png'
+            };
+            $(".btn12").click(function () {
+                updateSelectedSize($(this).text());
+            });
+            $(".btn14").click(function () {
+                updateSelectedShape($(this).text());
+            });
+            function updateSelectedSize(selectedSize) {
+                $(".btn12").removeClass("active");
+                $(`.btn12:contains(${selectedSize})`).addClass("active");
+                $(".selected-size").text("Selected size : " + selectedSize + " Inch");
+                $(".imgs12").attr("src", imageArray[selectedSize]);
+            }
+            function updateSelectedShape(selectedShape) {
+                $(".btn14").removeClass("active");
+                $(`.btn14:contains(${selectedShape})`).addClass("active");
+                $(".selected-shape").text("Selected shape : " + selectedShape);
+            }
+        });
+    </script>
+</head>
+<body>
+ <div class="mn">
+  <div class="mnn1">
+    <div class="mn1">
+        <img src="/images/logo.png" class="imgs1">
+        <h1>AirMagic</h1>
+      </div>
+      <div class="mn21">
+          <button class="btn1" type="button"><a class="nav-link" href="logout">Logout</a></button>
+      </div>
+    </div>
+      <nav>
+        <a style="--i: 1;" href="/" class="ln1">Home</a>
+        <a style="--i: 2;" href="/customize" class="ln1">Custome</a>
+        <a style="--i: 3;" href="/about-us" class="ln1">AboutUs</a>
+        <a style="--i: 4;" href="/" class="ln1">Contact Us</a>
+        <a style="--i: 1;" href="/add" class="ln1">Cart </a>
+        <a style="--i: 1;" href="/gallery" class="ln1">Gallery </a>
+       
+
+      </nav>     
+      </div>
+      <div class="mn3">
+        <div class="mn31">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+                <div style="flex: 1; max-width: 60%;">
+                    <div style="height: 520px; width: 100%; max-width: 620px; background-color: grey;" class="image-container img-fax">
+                        <img class="image-preview" src="/images/pic.png" alt="Image Preview" id="cursorImage" ondragstart="return false;" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+                <div style="flex: 1; max-width: 40%; padding-left: 20px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <button style="padding: 10px; background-color: #343a40; color: white;" onclick="zoomIn()">Zoom In</button>
+                        <button style="padding: 10px; background-color: #343a40; color: white;" onclick="zoomOut()">Zoom Out</button>
+                    </div>
+                    <label for="imageInput" id="label" style="display: block; width: 100%; padding: 10px; background-color: #343a40; color: white; text-align: center; cursor: pointer;">Upload</label>
+                    <input type="file" id="imageInput" accept="image/*" class="d-none" style="width: 100%; padding-left: 300px;">
+                </div>
+            </div>
+            
+        <div class="mn311">
+        <div class="mn32">
+            <h2 style="font-family: 'Oswald', sans-serif;">LANDSCAPE ACRYLIC FRAME</h2>
+            <h3>Acrylic Size (Inch)</h3>
+        </div>
+        <div class="mn33">
+            <button class="btn12" type="submit">12x8</button>
+            <button class="btn12" type="submit">14x10</button>
+            <button class="btn12" type="submit">17x12</button>
+            <button class="btn12" type="submit">20x14</button>
+            <button class="btn12" type="submit">36x24</button>
+        </div>
+        <h3>Shapes : </h3>
+        <div class="mn331">
+          <button class="btn14" type="submit">Square</button>
+          <button class="btn14" type="submit">Rectangle</button>
+          <button class="btn14" type="submit">Triangle</button>
+          <button class="btn14" type="submit">Circle</button>
+        </div>
+        <div class="mn34">
+            <p class="selected-size">Selected size : 12x8 Inch</p>
+            <p class="selected-shape">Selected shape : Square</p>
+            <p>Thickness : 3 MM</p>
+            <p>Mounting Method : Adhesive Tape</p>
+        </div>
+        <div class="mn35">
+            <h1 style="font-family: 'Oswald', sans-serif;">Total : ₹599</h1>
+        </div>
+        <div class="mn36">
+           
+           <a href="buy-now"><button class="btn13" type="submit">Buy now</button></a>
+
+        </div>
+        <div style="padding-top: 10px;">
+        </div>
+        <div class="mn36">
+           
+          <button class="btn13 button--1" type="submit">Add To Cart</button>
+
+       </div>
+    </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="pay">
+      <h1 style="font-family: 'Oswald', sans-serif;">100% Secure Payment</h1>
+      <div class="pay1">
+        <img src="/images/google-pay-icon.png" class="svgs">
+        <img src="/images/phonepe-icon.png"    class="svgs">
+        <img src="/images/paytm-icon.png"      class="svgs">
+        <img src="/images/upi-payment-icon.png"class="svgs">
+        <img src="/images/visa-icon.png"       class="svgs">
+        <img src="/images/master-card-icon.png"class="svgs">
+        <img src="/images/maestro-icon.png"    class="svgs">
+      </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="footer">
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">COMPANY</h1>
+        <a>About Us</a>
+        <a>Privacy Policy</a>
+        <a>T&C's</a>
+        <a>Refer & Earn</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">SUPPORT</h1>
+        <a>Contact Us</a>
+        <a>Track Order</a>
+        <a>Return Order</a>
+        <a>FAQ's</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">MORE INFO</h1>
+        <a>My Account</a>
+        <a>Order History</a>
+        <a>Your Credits</a>
+      </div>
+    </div>
+    <script src="./srcp.js"></script>
+    <script>
+  
+  // Your JavaScript code here
+  let str;
+  
+  const s=document.getElementById('amount');
+  function displayAmount(amount) {
+              event.preventDefault();
+
+              str=amount.split('x')
+              document.getElementById('price').textContent="preferred size: "+amount;
+}
+function toggleActive(button) {
+  if (button.classList.contains("active-button")) {
+      button.classList.remove("active-button");
+  } else {
+      button.classList.add("active-button");
+  }
+}
+function openPopup() {
+          // Show the overlay and popup
+          event.preventDefault();
+          document.getElementById('overlay').style.display = 'block';
+          document.getElementById('popup').style.display = 'block';
+      }
+
+      function closePopup() {
+          // Hide the overlay and popup
+          event.preventDefault();
+          document.getElementById('overlay').style.display = 'none';
+          document.getElementById('popup').style.display = 'none';
+      }
+
+function changeheight(a) {
+              event.preventDefault();
+const gridContainer = document.getElementById("grid");
+
+
+if (a==="square") {
+
+  gridContainer.style.height = "520px"; // Set the new height
+  s.textContent="Amount: $"+parseInt(str[0])*20;
+} else {
+  gridContainer.style.height = "350px"; // Set a different height
+      s.textContent="Amount: $"+parseInt(str[0])*30;
+}
+}
+
+
+var zoomFactor = 1.0; // Initial zoom factor
+
+function zoomIn() {
+              event.preventDefault();
+  zoomFactor += 0.1; // Increase zoom factor
+  updateZoom();
+}
+
+function zoomOut() {
+              event.preventDefault();
+  if (zoomFactor > 1.0) {
+      zoomFactor -= 0.1; // Decrease zoom factor, but don't go below 1.0
+      updateZoom();
+  }
+}
+
+function updateZoom() {
+              event.preventDefault();
+  var zoomedImage = document.getElementById("cursorImage");
+  zoomedImage.style.transform = "scale(" + zoomFactor + ")";
+}
+
+//script for add to cart button
+
+document.getElementById("openModalButton").addEventListener("click", function() {
+  document.getElementById("modal").style.display = "block";
+});
+
+// Close the modal
+document.getElementById("closeModal").addEventListener("click", function() {
+  document.getElementById("modal").style.display = "none";
+});
+
+// Close the modal if the user clicks outside the modal
+window.addEventListener("click", function(event) {
+              event.preventDefault();
+  if (event.target == document.getElementById("modal")) {
+      document.getElementById("modal").style.display = "none";
+  }
+});
+
+  </script>
+  
+</body>
+</html>

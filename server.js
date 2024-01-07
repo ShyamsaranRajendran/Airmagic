@@ -10,13 +10,16 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'gallery')));
+app.use('/gallery', express.static(path.join(__dirname, 'gallery')));
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.json()); // Add this line to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Add this line to parse URL-encoded bodies
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use(session({
     secret: '1988',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   }));
 const connection = mysql.createConnection({
@@ -26,15 +29,15 @@ const connection = mysql.createConnection({
     database: 'sign_in_data'
 });
 var sub_gal="Gallery_1";
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
+app.get('/customize1', (req, res) => {
+    res.sendFile(__dirname + '/views/sub-customize.html');
 });
 
 app.get('/login', (req, res) => {
     res.sendFile(__dirname + '/views/login.html');
 });
 app.get('/add',(req,res)=>{
-    res.sendFile(__dirname + '/views/cart.html');
+    res.sendFile(__dirname + '/views/cartmain.html');
 })
 app.get('/buy-now', (req, res) => {
     res.sendFile(__dirname + '/views/buy-now.html');
@@ -49,9 +52,14 @@ app.get('/sign-up', (req, res) => {
 app.get('/gallery', (req, res) => {
     res.sendFile(__dirname + '/views/gallery.html');
 });
-
-app.get('/customize', (req, res) => {
-    res.sendFile(__dirname + '/views/customize.html');
+app.get('/home', (req, res) => {
+  res.sendFile(__dirname + '/views/Home.html');
+});
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/Home.html');
+});
+app.get('/about', (req, res) => {
+  res.sendFile(__dirname + '/views/about.html');
 });
 
 app.get('/sub', (req, res) => {
@@ -60,10 +68,25 @@ app.get('/sub', (req, res) => {
 
 app.get('/sub-gallery/:table', (req, res) => {
     sub_gal = req.params.table;
-    // Use the tableName variable to dynamically fetch data from the specified table
-    // and send the appropriate response to the client
     console.log(`Showing data from table: ${sub_gal}`);
     res.redirect('/sub');
+});
+
+
+app.get('/customize-view/:url(*)', (req, res, next) => {
+  try {
+    // Assuming you are sending the URL as a parameter in the URL
+    const imageUrl = `/gallery/${req.params.url}`;
+    // Set the selectedImage in sessionStorage
+    res.send(`<script>window.sessionStorage.setItem('selectedImage', '${imageUrl}'); window.location.href='/customize';</script>`);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/customize', (req, res) => {
+  const customizePath = path.join(__dirname, 'views', 'customize.html');
+  res.sendFile(customizePath);
 });
 
 app.post('/buy-now-item', (req, res) => {
@@ -125,6 +148,7 @@ app.get('/sub-gallery-img-getter', async (req, res) => {
 });
 
 app.post('/remove-item', (req, res) => {
+  console.log("remove working");
     const imageUrl = req.body.imageUrl;
     const email = req.session.user.username; 
 
@@ -462,6 +486,7 @@ app.get('/user', (req, res) => {
 
 
   app.get('/getImages', (req, res) => {
+    console.log("getting imgs working");
     const email = req.session.user.username; // Get the email from the session
     const query = 'SELECT `key` FROM users WHERE email = ?';
     connection.query(query, [email], (err, results) => {

@@ -1,0 +1,385 @@
+
+*{
+    font-family: 'Poppins';
+    
+}
+body{
+    background-color: #ffffff;
+    width: 100%;
+    margin-left: 0%;
+}
+.mmm{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 0px;
+}
+.mn{
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 20px;
+    
+}
+.mmm1{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+.mn111{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: rgb(0, 0, 0);
+    margin: auto;
+    padding-left: 200px;
+}
+.mn111 h1{
+    margin-top: 6%;
+}
+
+.imgs1{
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+}
+.mn21{
+    margin-top: 1.3%;
+    color: #d5d3bc;
+    display: flex;
+    gap: 20px;
+    padding-right: 30px;
+}
+.mn21 a{
+    font-size: 9px;
+    color: #ffffff;
+    
+}
+.mn21 a:hover{
+    color: rgba(29,170,162);
+}
+nav {
+    padding-top: 30px;
+    margin-top: 0%;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(29,170,162);
+}
+
+nav a {
+    position: relative;
+    padding: 11px;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    overflow: hidden;
+}
+
+nav a::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(255, 255, 255);
+    transition: width 400ms ease-in-out;
+}
+nav a:hover::after {
+    width: 100%;
+}
+.btn1{
+    background-color: rgb(0, 0, 0);
+    border: 1.5px solid black;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    transition: 500ms;
+}
+.btn1:hover{
+    transform: scale(1.03);
+}
+.footer{
+    margin-top: 7%;
+    display: flex;
+    flex-direction: row;
+    gap: 125px;
+    padding: 0 3%;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 5%;
+    position: relative;
+}
+.fo1{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: left;
+}
+.fo1 h1{
+    font-size: 35;
+    border-bottom: 3px solid black;
+    border-width: 20%;
+}
+.fo1 a{
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+}
+.air{
+    width: 15%;
+}
+.pay{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+    gap: 10px;
+    margin-top: 5%;
+}
+.pay1{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.svgs{
+    width: 4%;
+}
+.img1{
+    width: 40%;
+    z-index: 1;
+    margin-top: -1%;
+    animation: slideTop 3s infinite;
+}
+.cas1{
+    padding: 2% 4%;
+}
+.cas{
+    width: 95%;
+    background-color: #0289F4;
+    height: 190px;
+    border-radius: 20px;
+    color: white;
+    padding-left: 3%;
+    padding-top: 20px;
+}
+.cas h1{
+    font-weight: 600;
+    font-size: 27px;
+}
+.cas p{
+    font-size:14px;
+}
+.s{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: 5%;
+    margin-top: 5%;
+    gap: 100px;
+}
+.sp{
+    display: flex;
+    width: 63%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 60px;
+    padding-left: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.sp1{
+    width: 40%;
+    padding: 4%;
+    border-right: 3px solid rgb(189, 189, 189);
+}
+.pic1{
+    width: 100%;
+    border-radius: 10px;
+}
+.sp2{
+    display: flex;
+    flex-direction: column;
+    line-height: 15px;
+}
+.sp2 h2{
+    font-size: 25px;
+}
+.sp2 p{
+    font-size: 14px;
+    color: rgb(122, 122, 122);
+}
+.bbtn12{
+    width: 300px;
+    height: 50px;
+    background-color: #FFAD3D;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    transition: 400ms;
+}
+.bbtn12:active{
+    transform: scale(1.06);
+    background-color: #fbbd66;
+}
+.bbtn1{
+    width: 200px;
+    height: 40px;
+    background-color: rgb(232, 232, 232);
+    color: red;
+    border-radius: 5px;
+    border: none;
+    transition: 600ms;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+.bbtn1:hover{
+    background-color: red;
+    color: white;
+    transform: scale(1.04);
+}
+@keyframes slideTop {
+    0%{
+       transform: translateY(0px); 
+    }
+    50%{
+        transform: translateY(-20px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
+@keyframes slideBottom {
+    0%{
+       transform: translateY(-100px); 
+       opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+
+
+@media screen and (max-width: 800px) {
+    *{
+       overflow-x: hidden;
+    }
+    .h{
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 8%;
+        gap: 1px;
+    }
+    .h1 h1{
+        font-size: 35px;
+    }
+    .h1 p{
+        font-size: 10px;
+    }
+    .img1{
+        width: 120%;
+        z-index: 1;
+        margin-left: -10%;
+        margin-top: 5%;
+    }
+    .h1{
+        width: 100%;
+        padding: auto;
+    }
+    .mn111{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 30px;
+        color: rgb(0, 0, 0);
+        margin: auto;
+        padding-left: 0px;
+    }
+    .btn2{
+        margin-top: 15%;
+    }
+    .nm{
+        flex-wrap: wrap;
+    }
+    .nm2{
+        text-align: center;
+        margin-top: -30%;
+    }
+    .bbt2{
+        margin: auto;
+        
+    }
+    .pic1{
+        width: 250px;
+        height: 250px;
+        margin-top: 15%;
+    }
+    .footer{
+        margin-top: 10%;
+    }
+    .fo1{
+        margin-top: -35%;
+    }
+    .air{
+    width: 50%;
+    margin-top: 35%;
+    }
+    .pay{
+        margin-top: 15%;
+    }
+    .svgs{
+        width: 10%;
+    }
+    .pay1{
+        gap: 10px;
+    }
+    .sp{
+        width: 95%;
+        padding-bottom: 3%;
+        gap:10px;
+    }
+    .sp1{
+        width: 100%;
+        padding-left: 10%;
+    }
+    .pic1{
+        width: 90%;
+
+    }
+    .sp2{
+        line-height: normal;
+        margin: auto;
+    }
+    .s{
+        padding: 2%;
+    }
+    .sp2{
+        text-align: center;
+        padding: 5%;
+    }
+    .bbtn1{
+        margin: auto;
+    }
+}
