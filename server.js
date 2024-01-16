@@ -2,17 +2,20 @@ const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql');
 const path = require('path');
-const fs = require('fs');
+const multer = require('multer');
+const fs = require('fs/promises');  // Use fs.promises for promises-based fs functions
+
 const cors = require('cors'); 
 const app = express();
+const bodyParser = require('body-parser');
 app.use(cors()); 
 const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'gallery')));
 app.use('/gallery', express.static(path.join(__dirname, 'gallery')));
-
 app.set('view engine', 'ejs');
+app.set('view engine', 'ejs'); 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.json()); // Add this line to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Add this line to parse URL-encoded bodies
@@ -28,9 +31,90 @@ const connection = mysql.createConnection({
     password: 's@r@n1977',
     database: 'sign_in_data'
 });
+let i;
+// Set up Multer for handling file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, path.join(__dirname, 'img'));
+  },
+  filename: (req, file, cb) => {
+    if (req.session.user.username) {
+      // Destroy the session
+      const fileName = req.session.user.username +'.png';
+      cb(null, fileName);
+     
+    } else {
+      res.redirect('/login');
+    }
+      
+  },
+});
+
+const upload = multer({ storage: storage });
+
+// Serve your static files (images, etc.)
+app.use('/img', express.static(path.join(__dirname, 'img')));
+
+// Define a route to handle image uploads
+app.post('/upload', upload.single('image'), (req, res) => {
+  // Access the uploaded file through req.file
+  if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  // Log user name, image name, and date to a log file
+  const logData = `${req.session.user.username} uploaded ${req.file.filename} on ${new Date().toLocaleString()}\n`;
+  fs.appendFile('upload-log.txt', logData, (err) => {
+      if (err) {
+          console.error('Error writing to log file:', err);
+      }
+  });
+
+  // Return a response with the image path
+  const imagePath = '/img/' + req.file.filename;
+  res.json({ message: 'File uploaded successfully', imagePath });
+});
+// Route to render images matching the current user's username
+app.get('/gallery--1', async (req, res) => {
+  try {
+      // Read the list of files in the "img" folder
+      const files = await fs.readdir(path.join(__dirname, 'img'));
+
+      // Filter for image files that match the current user's username
+      const imageFiles = files.filter(file => {
+          const usernameInFileName = file.split('-')[0]; // Assuming the username is before the '-' in the filename
+          return usernameInFileName === req.session.user.username;
+      });
+
+      // Generate HTML directly
+      const htmlContent = `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Image Gallery for ${req.session.user.username}</title>
+          </head>
+          <body>
+              <h1>Image Gallery for ${req.session.user.username}</h1>
+              <div>
+                  ${imageFiles.map(imageFile => `<img src="/img/${imageFile}" alt="${imageFile}">`).join('')}
+              </div>
+          </body>
+          </html>
+      `;
+
+      // Send the HTML content
+      res.send(htmlContent);
+  } catch (error) {
+      console.error('Error reading image files:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
 var sub_gal="Gallery_1";
 app.get('/customize1', (req, res) => {
-    res.sendFile(__dirname + '/views/sub-customize.html');
+    res.sendFile(__dirname + '/views/subcustom.html');
 });
 
 app.get('/login', (req, res) => {
@@ -280,43 +364,53 @@ const userSessions = {};
 // Handle login form submission
 // Handle login form submission
 app.post('/login', (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-  
-    const query = 'SELECT * FROM users WHERE email = ? AND password_hash = ?';
-    connection.query(query, [email, password], (err, results) => {
-      if (err) {
-        console.error('Error querying the database:', err);
-        res.status(500).send('Internal Server Error');
-        return;
-      }
-  
-      if (results.length === 1) {
-        // User authenticated
-        const user = { id: 1, username: email };
-        req.session.user = user;
-        userSessions[req.sessionID] =user; // Add user session
-        res.redirect('/');
-      } else {
-        // Authentication failed
-        console.log('Login failed');
-        res.status(401).send('Unauthorized');
-      }
-    });
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const query = 'SELECT * FROM users WHERE email = ? AND password_hash = ?';
+  connection.query(query, [email, password], (err, results) => {
+    if (err) {
+      console.error('Error querying the database:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    if (results.length === 1) {
+      // User authenticated
+      const user = { id: results[0].id, username: email };
+      req.session.user = user;
+      console.log('Logged in', req.session);
+      res.redirect('/');
+    } else {
+      // Authentication failed
+      console.log('Login failed');
+      res.status(401).send('Unauthorized');
+    }
   });
+});
+
   
   // Handle logout
   app.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error('Error destroying session:', err);
-      }
-      res.redirect('/login');
-    });
+    // Check if the session exists before trying to destroy it
+    if (req.session) {
+      // Destroy the session
+      req.session.destroy((err) => {
+        if (err) {
+          console.error('Error destroying session:', err);
+          res.status(500).send('Internal Server Error');
+        } else {
+          // Redirect or respond as needed
+          res.redirect('/');
+        }
+      });
+    } else {
+      res.redirect('/');
+    }
   });
   
   // Serve a protected route
-  app.get('/op', (req, res) => {
+  app.get('/shyam', (req, res) => {
     if (req.session.user) {
       res.send('Welcome, ' + req.session.user.username);
     } else {
@@ -410,65 +504,65 @@ app.post('/submit', (req, res) => {
   
 
 app.post('/addToCart', (req, res) => {
-    const imageUrl = req.body.imageUrl;
-    
-    // Check if the user is authenticated and the email is available in the session
-    if (!req.session.user || !req.session.user.username) {
+  const imageUrl = req.body.imageUrl;
+
+  // Check if the user is authenticated and the email is available in the session
+  if (!req.session.user || !req.session.user.username) {
       console.log('User not authenticated.');
       return res.status(401).send('User not authenticated');
-    }
-  
-    const email = req.session.user.username;
-  
-    // Query to get the key associated with the user's email
-    const query = 'SELECT `key` FROM users WHERE email = ?';
-  
-    connection.query(query, [email], (err, results) => {
+  }
+
+  const email = req.session.user.username;
+
+  // Query to get the key associated with the user's email
+  const query = 'SELECT `key` FROM users WHERE email = ?';
+
+  connection.query(query, [email], (err, results) => {
       if (err) {
-        console.error('Error querying the database:', err);
-        return res.status(500).send('Internal Server Error');
+          console.error('Error querying the database:', err);
+          return res.status(500).send('Internal Server Error');
       }
-  
+
       if (results.length > 0) {
-        const userKey = results[0].key;
-        const tableName = userKey; // Use the user's key as the table name
-        
-        // Query to create a table if it doesn't exist
-        const createTableSQL = `
-          CREATE TABLE IF NOT EXISTS ${tableName} (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            img_url VARCHAR(255) NOT NULL
-          )
-        `;
-  
-        connection.query(createTableSQL, (err, result) => {
-          if (err) {
-            console.error('Error creating table:', err);
-            return res.status(500).send('Internal Server Error');
-          }
-  
-          console.log(`Table ${tableName} created or already exists.`);
-  
-          // Query to insert data into the user's table
-          const insertDataSQL = 'INSERT INTO ' + tableName + ' (img_url) VALUES (?)';
-          
-          connection.query(insertDataSQL, [imageUrl], (err, result) => {
-            if (err) {
-              console.error('Error inserting data:', err);
-              return res.status(500).send('Internal Server Error');
-            }
-  
-            console.log('Image added to user cart successfully.');
-            return res.status(200).send('Image added to cart successfully');
+          const userKey = results[0].key;
+          const tableName = userKey; // Use the user's key as the table name
+
+          // Query to create a table if it doesn't exist
+          const createTableSQL = `
+              CREATE TABLE IF NOT EXISTS ${tableName} (
+                  id INT AUTO_INCREMENT PRIMARY KEY,
+                  img_url VARCHAR(255) NOT NULL
+              )
+          `;
+
+          connection.query(createTableSQL, (err, result) => {
+              if (err) {
+                  console.error('Error creating table:', err);
+                  return res.status(500).send('Internal Server Error');
+              }
+
+              console.log(`Table ${tableName} created or already exists.`);
+
+              // Query to insert data into the user's table
+              const insertDataSQL = 'INSERT INTO ' + tableName + ' (img_url) VALUES (?)';
+
+              connection.query(insertDataSQL, [imageUrl], (err, result) => {
+                  if (err) {
+                      console.error('Error inserting data:', err);
+                      return res.status(500).send('Internal Server Error');
+                  }
+
+                  console.log('Image added to user cart successfully.');
+                  return res.status(200).send('Image added to cart successfully');
+              });
           });
-        });
       } else {
-        console.log('User not found.');
-        return res.status(404).send('User not found');
+          console.log('User not found.');
+          return res.status(404).send('User not found');
       }
-    });
   });
-  
+});
+
 
   
   app.get('/get-session-id', (req, res) => {

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cartcss.css" >
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+ 
+
+#cursorImage {
+            transition: transform 0.3s ease-in-out;
+            cursor: grab;
+        }
+
+        /* Additional styles for the dragged image */
+        #cursorImage.dragging {
+            cursor: grabbing;
+        }
+
+.ppl{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+#imageInput
+{
+display:none;
+}
+
+    #imageInput {
+      display: none;
+    }
+
+    .image-preview {
+          
+           object-fit: cover;
+           border-radius: 10px;
+   
+         }
+     
+         .grid-container {
+            position: relative;
+            width: 500px; /* Default width */
+            height: 300px; /* Default height */
+            overflow: hidden;
+        }
+
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0, 0, 0, 0.2) 40px, rgba(0, 0, 0, 0.2) 41px),
+                              repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0, 0, 0, 0.2) 40px, rgba(0, 0, 0, 0.2) 41px);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .image {
+            width: 100%; /* Default width */
+            height: 100%; /* Default height */
+            display: block;
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
+    </style>
+   <script>
+    function dragStart(event) {
+            // Save initial mouse position
+            event.dataTransfer.setData("text/plain", (event.clientX - event.target.offsetLeft) + ',' + (event.clientY - event.target.offsetTop));
+            // Add a class to indicate dragging
+            event.target.classList.add("dragging");
+        }
+
+        function dragOver(event) {
+            // Prevent default behavior to enable drop
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            // Prevent default behavior to enable drop
+            event.preventDefault();
+
+            // Get initial mouse position
+            const offset = event.dataTransfer.getData("text/plain").split(',');
+
+            // Set the new position of the dragged element
+            event.target.style.left = (event.clientX - parseInt(offset[0], 10)) + 'px';
+            event.target.style.top = (event.clientY - parseInt(offset[1], 10)) + 'px';
+
+            // Remove the dragging class
+            event.target.classList.remove("dragging");
+        }
+</script>
+
+  
+</head>
+<body>
+ <div class="mn">
+  <div class="mnn1">
+    <div class="mn1">
+        <img src="/images/logo.png" class="imgs1">
+        <h1>AirMagic</h1>
+      </div>
+      <div class="mn21">
+          <button class="btn1" type="button"><a class="nav-link" href="logout">Logout</a></button>
+      </div>
+    </div>
+      <nav>
+        <a style="--i: 1;" href="/" class="ln1">Home</a>
+        <a style="--i: 2;" href="/customize" class="ln1">Custome</a>
+        <a style="--i: 3;" href="/about" class="ln1">AboutUs</a>
+        <a style="--i: 4;" href="/" class="ln1">Contact Us</a>
+        <a style="--i: 1;" href="/add" class="ln1">Cart </a>
+        <a style="--i: 1;" href="/gallery" class="ln1">Gallery </a>
+       
+       
+      </nav>     
+      </div>
+     
+      <div class="mn3">
+        <label for="imageInput" class="ppl" id="uploadButton" style="padding-left: 170px;"> How</label>
+          <div class="mmnn1 background-container">
+              <!-- Actual file input (hidden) -->
+              <input type="file" id="imageInput" accept="image/*" onchange="uploadImage()" />
+      
+              <div class="grid-container" id="container" draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)">
+                  <div class="grid"></div>
+                  <img class="image image-preview" src="/images/1217.png" alt="Image Preview" id="cursorImage" ondragstart="return false;">
+              </div>
+          </div>
+     
+        <div class="mn311">
+          <br>
+          <br>
+        </div>
+        <div class="mn311">
+          <div class="mn32">
+            <h2 style="font-family: 'Oswald', sans-serif;">LANDSCAPE ACRYLIC FRAME</h2>
+            <h3>Acrylic Size (Inch)</h3>
+          </div>
+          <div class="mn33">
+            <br><br>
+            <button class="btn12 inpt" type="button" onclick="changeShape('square') ">12x12</button>
+            <button class="btn12" type="button" onclick="changeShape('rectangle-horizontal')">12x24</button>
+            <button class="btn12" type="button" onclick="changeShape('rectangle-vertical')">24x12</button>
+          </div>
+          <div class="mn33">
+            <br><br><br><br><br>
+            <button class="btn12" type="button" onclick="changeShape('square-2')">24x24</button>
+            <button class="btn12" type="button" onclick="changeShape('rectangle-horizontal-2')">24x36</button>
+            <button class="btn12" type="button" onclick="changeShape('rectangle-vertical-2')">12x36</button>
+          </div>
+      
+          <h3>Shapes:</h3>
+          <div class="mn331">
+            <button class="btn14" type="button">Square</button>
+            <button class="btn14" type="button">Rectangle</button>
+          </div>
+      
+          <div class="mn34">
+            <p class="selected-size">Selected size: 12x8 Inch</p>
+            <p class="selected-shape">Selected shape: Square</p>
+            <p>Thickness: 3 MM</p>
+            <p>Mounting Method: Adhesive Tape</p>
+          </div>
+      
+          <div class="mn35">
+            <h1 style="font-family: 'Oswald', sans-serif;">Total: ₹599</h1>
+          </div>
+      
+          <div style="padding-top: 10px;"></div>
+      
+          <div class="">
+            <button class="btn13 button--1" type="button" onclick="addToCart(str1)">Add To Cart</button>
+          </div>
+        </div>
+      </div>
+      
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;margin-top: 10%;">
+    <div class="pay" style="margin-top: 10%;">
+      <h1 style="font-family: 'Oswald', sans-serif;">100% Secure Payment</h1>
+      <div class="pay1">
+        <img src="/images/google-pay-icon.png" class="svgs">
+        <img src="/images/phonepe-icon.png"    class="svgs">
+        <img src="/images/paytm-icon.png"      class="svgs">
+        <img src="/images/upi-payment-icon.png"class="svgs">
+        <img src="/images/visa-icon.png"       class="svgs">
+        <img src="/images/master-card-icon.png"class="svgs">
+        <img src="/images/maestro-icon.png"    class="svgs">
+      </div>
+    </div>
+    <hr style="width: 100%; color: rgb(233, 233, 233);position: relative;top: 50px;">
+    <div class="footer">
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">COMPANY</h1>
+        <a>About Us</a>
+        <a>Privacy Policy</a>
+        <a>T&C's</a>
+        <a>Refer & Earn</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">BEST SELLERS</h1>
+        <a>Wall Photo Frames</a>
+        <a>Photo Stands</a>
+        <a>Mobile Cases</a>
+        <a>Photo Mugs</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">SUPPORT</h1>
+        <a>Contact Us</a>
+        <a>Track Order</a>
+        <a>Return Order</a>
+        <a>FAQ's</a>
+      </div>
+      <div class="fo1">
+        <h1 style="font-family: 'Oswald';">MORE INFO</h1>
+        <a>My Account</a>
+        <a>Order History</a>
+        <a>Your Credits</a>
+      </div>
+    </div>
+    <script src="./srcp.js"></script>
+    
+</body>
+</html>

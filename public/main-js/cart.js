@@ -1,11 +1,13 @@
+var num=0;
 function createProductElements_1(imageNames) {
          // Container to hold all product elements
          const container = document.createElement('div');
 
          imageNames.forEach(imageName => {
+            num=num+1;
              const productContainer = document.createElement('div');
              productContainer.classList.add('s');
-
+            
              // Create product display section
              const productDisplay = document.createElement('div');
              productDisplay.classList.add('sp');
@@ -86,7 +88,7 @@ function createProductElements_1(imageNames) {
        hr2.style.height = '2px';
 
        const total = document.createElement('h2');
-       total.textContent = 'Total : ₹599 Only';
+       total.textContent = `Total : ₹${num*599} Only`;
 
        const proceedToBuyButton = document.createElement('button');
              proceedToBuyButton.classList.add('bbtn12');
@@ -116,6 +118,7 @@ function createProductElements_1(imageNames) {
 
    return container;
 }
+
 function fetchImageNames() {
  fetch('/getImages')
      .then(response => {
@@ -128,10 +131,11 @@ function fetchImageNames() {
          const cartElement = document.querySelector('.cart');
          cartElement.innerHTML = '';
          console.log('Fetched image URLs:', imageNames);
-
+         
          // Create product elements and append them to the body
          const productElements = createProductElements_1(imageNames);
          cartElement.appendChild(productElements);
+         updateTotalCost();
      })
      .catch(error => {
          console.error('Fetch error:', error);
@@ -184,6 +188,13 @@ function handleRemove(imageUrl) {
            console.error('Buy Now error:', error);
        });
 }
+
+function updateTotalCost() {
+    
+}
+
+
+
 
 // Call the function to fetch and display images
 fetchImageNames();
