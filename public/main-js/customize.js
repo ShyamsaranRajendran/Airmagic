@@ -75,6 +75,7 @@
 }
 
 
+
    // Use window.sessionStorage to access the session variable in the browser
    const selectedImage = window.sessionStorage.selectedImage || "/gallery/gal2/image1.png";
    document.getElementById('selectedImage').src = selectedImage;

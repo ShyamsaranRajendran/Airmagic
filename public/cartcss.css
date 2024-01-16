@@ -335,6 +335,126 @@ nav a:hover::after {
     color: black;
     font-size: 13px;
 }
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    z-index: 1;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#cursorImage {
+
+    transition: transform 0.3s ease-in-out; 
+}
+#label
+{
+display:block;
+width:130px;
+height: 40px;
+padding-top: 14px;
+background:#e3362c;
+color:#fff;
+padding-left: 65px;
+margin:auto;
+border-radius:5px;
+cursor: pointer;
+position:relative;
+margin-top: 5%;
+box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.ppl{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+#imageInput
+{
+display:none;
+}
+ /* Style for the custom button */
+ #uploadButton {
+            cursor: pointer;
+            padding: 10px;
+            background-color: transparent;
+            color:transparent;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            display:flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+        }
+
+       
+
+        .background-container {
+          padding-top: 100px;
+      display: flex;
+      justify-content:center;
+      align-items:flex-start;
+      text-align: center;
+      position: relative;
+      z-index: -1;
+    }
+
+    #imageInput {
+      display: none;
+    }
+
+    .image-preview {
+          
+           object-fit: cover;
+           border-radius: 10px;
+   
+         }
+     
+         .grid-container {
+            position: relative;
+            width: 500px; /* Default width */
+            height: 300px; /* Default height */
+            overflow: hidden;
+        }
+
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0, 0, 0, 0.2) 40px, rgba(0, 0, 0, 0.2) 41px),
+                              repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0, 0, 0, 0.2) 40px, rgba(0, 0, 0, 0.2) 41px);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .image {
+            width: 100%; /* Default width */
+            height: 100%; /* Default height */
+            display: block;
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
 @media screen and (max-width: 600px) {
     .mn311{
         margin-left: 6%;

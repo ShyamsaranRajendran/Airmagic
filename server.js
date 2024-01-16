@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true })); // Add this line to parse URL-e
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use(session({
     secret: '1988',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   }));
 const connection = mysql.createConnection({

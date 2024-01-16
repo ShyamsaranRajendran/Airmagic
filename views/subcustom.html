@@ -10,50 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Teko&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
- .overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-    z-index: 1;
-}
+ 
 
-.popup {
-    display: none;
-    position: fixed;
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 #cursorImage {
+            transition: transform 0.3s ease-in-out;
+            cursor: grab;
+        }
 
-    transition: transform 0.3s ease-in-out; 
-}
-#label
-{
-display:block;
-width:130px;
-height: 40px;
-padding-top: 14px;
-background:#e3362c;
-color:#fff;
-padding-left: 65px;
-margin:auto;
-border-radius:5px;
-cursor: pointer;
-position:relative;
-margin-top: 5%;
-box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
+        /* Additional styles for the dragged image */
+        #cursorImage.dragging {
+            cursor: grabbing;
+        }
+
 .ppl{
   display:flex;
   justify-content: center;
@@ -65,33 +33,6 @@ box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 {
 display:none;
 }
- /* Style for the custom button */
- #uploadButton {
-            cursor: pointer;
-            padding: 10px;
-            background-color: transparent;
-            color:transparent;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            display:flex;
-  justify-content: center;
-  align-items: center;
-  width: auto;
-  height: auto;
-        }
-
-       
-
-        .background-container {
-          padding-top: 100px;
-      display: flex;
-      justify-content:center;
-      align-items:flex-start;
-      text-align: center;
-      position: relative;
-      z-index: -1;
-    }
 
     #imageInput {
       display: none;
@@ -131,144 +72,31 @@ display:none;
         }
     </style>
    <script>
-     $(document).ready(function () {
-           
-            $(".btn12").click(function () {
-                updateSelectedSize($(this).text());
-            });
-            $(".btn14").click(function () {
-                updateSelectedShape($(this).text());
-            });
-            function updateSelectedSize(selectedSize) {
-                $(".btn12").removeClass("active");
-                $(`.btn12:contains(${selectedSize})`).addClass("active");
-                $(".selected-size").text("Selected size : " + selectedSize + " Inch");
-                $(".imgs12").attr("src", imageArray[selectedSize]);
-            }
-            function updateSelectedShape(selectedShape) {
-                $(".btn14").removeClass("active");
-                $(`.btn14:contains(${selectedShape})`).addClass("active");
-                $(".selected-shape").text("Selected shape : " + selectedShape);
-            }
-        });
-     let str1;
-        function uploadImage() {
-      const inputElement = document.getElementById('imageInput');
-      const file = inputElement.files[0];
-
-      if (!file) {
-        alert('Please select an image to upload.');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('image', file);
-
-      fetch('http://localhost:4000/upload', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+    function dragStart(event) {
+            // Save initial mouse position
+            event.dataTransfer.setData("text/plain", (event.clientX - event.target.offsetLeft) + ',' + (event.clientY - event.target.offsetTop));
+            // Add a class to indicate dragging
+            event.target.classList.add("dragging");
         }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
 
-        // Display the uploaded image
-        const previewImage = document.createElement('img');
-        previewImage.src = data.imagePath;
-        previewImage.alt = 'Image Preview';
-        document.body.appendChild(previewImage);
-
-        // Add the image to the cart
-        str1=data.imagePath;
-       // addToCart(data.imagePath);
-
-        alert('Image uploaded successfully! Image path: ' + data.imagePath);
-      })
-      .catch(error => {
-        console.error('Error uploading image:', error);
-        alert('Error uploading image. Please try again.');
-      });
-    }
-
-    function addToCart(imageUrl) {
-      fetch('http://localhost:4000/addToCart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ imageUrl }),
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        function dragOver(event) {
+            // Prevent default behavior to enable drop
+            event.preventDefault();
         }
-        return response.json();
-      })
-      .then(result => {
-        console.log(result.message);
-      })
-      .catch(error => {
-        console.error('Error adding to cart:', error);
-        alert('Error adding to cart. Please try again.');
-      });
-      const button = document.querySelector('.btn13');
-      button.classList.toggle('clicked');
-    }
 
- function changeShape(shape) {
-            const container = document.getElementById('container');
-            const image = document.querySelector('.image');
+        function drop(event) {
+            // Prevent default behavior to enable drop
+            event.preventDefault();
 
-            switch (shape) {
-                case 'square':
-                    container.style.width = '100px';
-                    container.style.height = '100px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-                case 'rectangle-horizontal':
-                    container.style.width = '200px';
-                    container.style.height = '100px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-                case 'rectangle-vertical':
-                    container.style.width = '100px';
-                    container.style.height = '200px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-                case 'square-2':
-                    container.style.width = '150px';
-                    container.style.height = '150px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-                case 'rectangle-horizontal-2':
-                    container.style.width = '300px';
-                    container.style.height = '150px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-                case 'rectangle-vertical-2':
-                    container.style.width = '150px';
-                    container.style.height = '300px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-                default:
-                    // Default shape (you can customize this based on your needs)
-                    container.style.width = '500px';
-                    container.style.height = '300px';
-                    image.style.width = '100%';
-                    image.style.height = '100%';
-                    break;
-            }
+            // Get initial mouse position
+            const offset = event.dataTransfer.getData("text/plain").split(',');
+
+            // Set the new position of the dragged element
+            event.target.style.left = (event.clientX - parseInt(offset[0], 10)) + 'px';
+            event.target.style.top = (event.clientY - parseInt(offset[1], 10)) + 'px';
+
+            // Remove the dragging class
+            event.target.classList.remove("dragging");
         }
 </script>
 
@@ -298,23 +126,17 @@ display:none;
       </div>
      
       <div class="mn3">
-        <label for="imageInput" class="ppl" id="uploadButton" style="padding-left: 170px;">
-         <div class="mmnn1 background-container">
-          <!-- Actual file input (hidden) -->
-          <input type="file" id="imageInput" accept="image/*" onchange="uploadImage()" />
+        <label for="imageInput" class="ppl" id="uploadButton" style="padding-left: 170px;"> How</label>
+          <div class="mmnn1 background-container">
+              <!-- Actual file input (hidden) -->
+              <input type="file" id="imageInput" accept="image/*" onchange="uploadImage()" />
       
-          <div class="grid-container" id="container">
-            <div class="grid"></div>
-            <img class="image image-preview" src="/images/1217.png" alt="Image Preview" id="cursorImage" ondragstart="return false;">
+              <div class="grid-container" id="container" draggable="true" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)">
+                  <div class="grid"></div>
+                  <img class="image image-preview" src="/images/1217.png" alt="Image Preview" id="cursorImage" ondragstart="return false;">
+              </div>
           </div>
-          
-       
-
-
-
-        </div>
-        
-          </label>
+     
         <div class="mn311">
           <br>
           <br>
@@ -406,10 +228,6 @@ display:none;
       </div>
     </div>
     <script src="./srcp.js"></script>
-    <script>
-  let str;
-  
-
-  </script>  
+    
 </body>
 </html>

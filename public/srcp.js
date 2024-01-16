@@ -1,99 +1,158 @@
 const imageInput = document.getElementById('imageInput');
 const imagePreviews = document.querySelectorAll('.image-preview');
-const price=document.getElementById('price');
 
 imageInput.addEventListener('change', function () {
-    const file = imageInput.files[0];
+  const files = imageInput.files;
+
+  for (let i = 0; i < imagePreviews.length; i++) {
+    const file = files[i];
 
     if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            imagePreviews.forEach((preview) => {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            });
-        };
-        reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreviews[i].src = e.target.result;
+        imagePreviews[i].style.display = 'block';
+      };
+      reader.readAsDataURL(file);
     } else {
-        imagePreviews.forEach((preview) => {
-            preview.src = '#';
-            preview.style.display = 'none';
-        });
+      imagePreviews[i].src = '#';
+      imagePreviews[i].style.display = 'none';
+    }
+  }
+});
+
+$(document).ready(function () {
+           
+    $(".btn12").click(function () {
+        updateSelectedSize($(this).text());
+    });
+    $(".btn14").click(function () {
+        updateSelectedShape($(this).text());
+    });
+    function updateSelectedSize(selectedSize) {
+        $(".btn12").removeClass("active");
+        $(`.btn12:contains(${selectedSize})`).addClass("active");
+        $(".selected-size").text("Selected size : " + selectedSize + " Inch");
+        $(".imgs12").attr("src", imageArray[selectedSize]);
+    }
+    function updateSelectedShape(selectedShape) {
+        $(".btn14").removeClass("active");
+        $(`.btn14:contains(${selectedShape})`).addClass("active");
+        $(".selected-shape").text("Selected shape : " + selectedShape);
     }
 });
- 
-document.getElementById('openPopupButton').addEventListener('click', function() {
-    // Open "page2.html" in a popup window
-    window.open('/buy-now', 'PopupWindow', 'width=400,height=400');
+let str1;
+function uploadImage() {
+const inputElement = document.getElementById('imageInput');
+const file = inputElement.files[0];
+
+if (!file) {
+alert('Please select an image to upload.');
+return;
+}
+
+const formData = new FormData();
+formData.append('image', file);
+
+fetch('http://localhost:4000/upload', {
+method: 'POST',
+body: formData
+})
+.then(response => {
+if (!response.ok) {
+  throw new Error('Network response was not ok');
+}
+return response.json();
+})
+.then(data => {
+console.log(data);
+
+
+
+// Add the image to the cart
+str1=data.imagePath;
+// addToCart(data.imagePath);
+
+alert('Image uploaded successfully! Image path: ' + data.imagePath);
+})
+.catch(error => {
+console.error('Error uploading image:', error);
+alert('Error uploading image. Please try again.');
 });
-
-// Function to toggle the 'active' class on button click
-function toggleActive(button) {
-    const buttons = document.querySelectorAll('.button1');
-    buttons.forEach((btn) => btn.classList.remove('active'));
-    button.classList.add('active');
 }
 
-// Add an event listener to each button
-const buttons = document.querySelectorAll('.button1');
-buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-        toggleActive(button);
-        const amount = parseInt(button.getAttribute('data-amount'));
-        displayAmount(amount);
-    });
+function addToCart(imageUrl) {
+fetch('http://localhost:4000/addToCart', {
+method: 'POST',
+headers: {
+  'Content-Type': 'application/json',
+},
+body: JSON.stringify({ imageUrl }),
+})
+.then(response => {
+if (!response.ok) {
+  throw new Error('Network response was not ok');
+}
+return response.json();
+})
+.then(result => {
+console.log(result.message);
+})
+.catch(error => {
+console.error('Error adding to cart:', error);
+alert('Error adding to cart. Please try again.');
 });
-
-let gMouseDownX = 0;
-let gMouseDownY = 0;
-let gMouseDownOffsetX = 0;
-let gMouseDownOffsetY = 0;
-
-function addListeners() {
-document.getElementById('cursorImage').addEventListener('mousedown', mouseDown, false);
-window.addEventListener('mouseup', mouseUp, false);
+const button = document.querySelector('.btn13');
+button.classList.toggle('clicked');
 }
 
-function mouseUp() {
-window.removeEventListener('mousemove', divMove, true);
+function changeShape(shape) {
+    const container = document.getElementById('container');
+    const image = document.querySelector('.image');
+
+    switch (shape) {
+        case 'square':
+            container.style.width = '100px';
+            container.style.height = '100px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+        case 'rectangle-horizontal':
+            container.style.width = '200px';
+            container.style.height = '100px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+        case 'rectangle-vertical':
+            container.style.width = '100px';
+            container.style.height = '200px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+        case 'square-2':
+            container.style.width = '150px';
+            container.style.height = '150px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+        case 'rectangle-horizontal-2':
+            container.style.width = '300px';
+            container.style.height = '150px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+        case 'rectangle-vertical-2':
+            container.style.width = '150px';
+            container.style.height = '300px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+        default:
+            // Default shape (you can customize this based on your needs)
+            container.style.width = '500px';
+            container.style.height = '300px';
+            image.style.width = '100%';
+            image.style.height = '100%';
+            break;
+    }
 }
-
-function mouseDown(e) {
-gMouseDownX = e.clientX;
-gMouseDownY = e.clientY;
-
-var div = document.getElementById('cursorImage');
-
-//The following block gets the X offset (the difference between where it starts and where it was clicked)
-let leftPart = "";
-if(!div.style.left)
-leftPart+="0px";    //In case this was not defined as 0px explicitly.
-else
-leftPart = div.style.left;
-let leftPos = leftPart.indexOf("px");
-let leftNumString = leftPart.slice(0, leftPos); // Get the X value of the object.
-gMouseDownOffsetX = gMouseDownX - parseInt(leftNumString,10);
-
-//The following block gets the Y offset (the difference between where it starts and where it was clicked)
-let topPart = "";
-if(!div.style.top)
-topPart+="0px";     //In case this was not defined as 0px explicitly.
-else
-topPart = div.style.top;
-let topPos = topPart.indexOf("px");
-let topNumString = topPart.slice(0, topPos);    // Get the Y value of the object.
-gMouseDownOffsetY = gMouseDownY - parseInt(topNumString,10);
-
-window.addEventListener('mousemove', divMove, true);
-}
-
-function divMove(e){
-var div = document.getElementById('cursorImage');
-div.style.position = 'absolute';
-let topAmount = e.clientY - gMouseDownOffsetY;
-div.style.top = topAmount + 'px';
-let leftAmount = e.clientX - gMouseDownOffsetX;
-div.style.left = leftAmount + 'px';
-}
-
-addListeners();
