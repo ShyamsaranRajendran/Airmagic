@@ -1,0 +1,474 @@
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Moveable Image Grid Example</title>
+    <style>
+        
+          #cal
+            {  border: 5px solid black;
+}
+#img
+            {  border: 5px solid black;
+}
+#img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55vh; /* Adjust the height as needed */
+}
+#cursorImage {
+
+    transition: transform 0.3s ease-in-out; /* Add smooth transition */
+}
+#label
+{
+display:block;
+width:100px;
+background:#e3362c;
+color:#fff;
+
+margin:10px auto;
+border-radius:5px;
+cursor: pointer;
+position:relative;
+right:315px;
+top:-40px;
+}
+#imageInput
+{
+display:none;
+}
+
+
+    </style>
+    <script src= 
+"https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"> 
+	</script> 
+    <link rel="stylesheet" href="sty.css">
+</head>
+<body>
+    <div class="container-fulid root content">
+         
+<nav class="navbar navbar-expand-sm bg-white navbar-dark">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <button class="rounded   bg-dark" type="button">
+          <a class="nav-link" href="#"><b>Menu</b></a>
+          </button>
+        </li>
+      </ul>
+      <center>
+ <h2  id="image" class="custom-background"><img src="j.jpg" id="im" alt="Avatar" width="90" height="50" />AIRMAGIC<img src="i.jpg" id="im" alt="Avatar" width="90" height="50" /></h2>
+    </center> 
+      <form class="d-flex">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+          <button class="rounded   bg-dark" type="button"><a class="nav-link" href="#">Cart/$0</a></button>
+        </li>
+        <li class="nav-item button">
+          <button class="rounded   bg-dark" type="button"><a class="nav-link" href="#">Login</a></button>
+        </li>
+        </ul>
+      
+    
+    </div>
+  </nav>
+  <p style="background-color:black;">. </p>
+<br>
+
+   <div  >
+   <center>
+          
+            <div class="col-sm-7 text-white  bring-front "  id="pic">
+              
+       <div class="image-grid" id="img" style="background-color:#333;">
+          
+          <div style="height:520px;width:520px  ;background-color:grey;"  class="image-container img-fax" id="grid">
+              <img class="image-preview" src="#" alt="Image Preview" style="display: none;" id="cursorImage" ondragstart="return false;"/>
+           </div>
+           <div style="background-color:white;height:520px;" id="cal">
+               <br>
+                                                   <h4 class="text-black">Shape</h4>
+                    <div class="button-container" style="padding-left: 100px;">
+
+                      <button class="button   bg-dark" onclick="changeheight('rectangle')">rectangle</button>
+                      <button class="button   bg-dark" onclick="changeheight('square')">square</button>
+
+                      
+                  </div>
+                  <br>
+               <br>
+                    <h4 class="text-black">Size</h4>
+                    <div class="button-container" style="padding-left: 100px;">
+
+                      <button class="button   bg-dark" onclick="displayAmount('6x6')">6x6</button>
+                      <button class="button   bg-dark" onclick="displayAmount('16x12')">16x12</button>
+
+                      <button class="button   bg-dark" onclick="displayAmount('18x12')">18x12</button>
+                      <button class="button   bg-dark" onclick="displayAmount('21x15')">21x15</button>
+
+                      <button class="button active " onclick="displayAmount('25x25')">25x25</button>
+                      <button class="button   bg-dark" onclick="displayAmount('25x30')">25x30</button>
+                  </div>
+                  
+                  <br>
+
+                 
+                  <br>
+                  <h5 class="text-black" id="price"></h5>
+                  <br>
+                  <h5 class="text-black">Thickness:3 MM(default)</h5>
+                  
+              
+                                <h6 class="text-black" id="amount"></h6>
+                                <br>
+                
+              <button style="width: 150px;background-color:#e3362c;" class="button" id="openModalButton"> &#128722; ADD TO CART</button>
+
+                  <script>
+                     
+                  </script>
+
+
+
+
+
+                
+               
+         </div>
+        </div>
+        </div>
+            
+       </div>
+       </center>
+           </div>
+           		<button onclick="takeshot()"> k</button>
+           <script type="text/javascript"> 
+
+		// Define the function 
+		// to screenshot the div 
+		function takeshot() { 
+		                    event.preventDefault();
+			let div = 
+				document.getElementById('grid'); 
+
+			// Use the html2canvas 
+			// function to take a screenshot 
+			// and append it 
+			// to the output div 
+			html2canvas(div).then( 
+				function (canvas) { 
+					//document.body.appendChild(canvas); 
+					 const imageDataURL = canvas.toDataURL('image/png');
+
+      // Extract the actual base64-encoded binary data
+      const binaryData = imageDataURL.replace(/^data:image\/png;base64,/, '');
+
+      // Display or process the binary data as needed
+      console.log(binaryData);
+				const imgElement = new Image();
+const blob = base64ToBlob(binaryData, 'image/png');
+
+        // Create a downloadable link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'screenshot.png';
+
+        // Append the link to the document and trigger a click event to initiate the download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+
+        // Remove the link from the document
+        document.body.removeChild(downloadLink);
+      // Set the source of the image to a data URL constructed from the binary data
+      imgElement.src = "data:image/png;base64," + binaryData;
+      imgElement.width = 200;
+    imgElement.height = 200;
+      // Display the image in the "imageContainer" div
+      const imageContainer = document.body;
+      //imageContainer.innerHTML = ''; // Clear previous content
+      imageContainer.appendChild(imgElement);
+				}) 
+		} 
+		function base64ToBlob(base64Data, contentType) {
+    contentType = contentType || '';
+    const sliceSize = 1024;
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+        const byteNumbers = new Array(slice.length);
+
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: contentType });
+}
+	</script> 
+<div>
+<center>
+<button type="button" class="buttond   bg-dark" onclick="zoomIn()">Zoom In</button>
+    <button type="button"  class="buttond   bg-dark" onclick="zoomOut()">Zoom Out</button>
+</center>
+<label for="imageInput" id="label">upload</label>
+                    <input type="file" id="imageInput" accept="image/*" >
+                    
+         </div>
+<br><div>
+<br>
+<br>
+</div>
+	<div id="output"></div> 
+    <footer class="page-footer font-small teal pt-4">
+
+        <!-- Footer Text -->
+        <div class="container-fluid  text-md-left">
+      
+          <!-- Grid row -->
+          <div class="row">
+      
+            <!-- Grid column -->
+            <div class="col-md-6 mt-md-0 mt-3">
+      
+              <!-- Content -->
+              <h5 class="text-uppercase font-weight-bold">Customer Care</h5>
+              <br>
+              <pre>Contact us
+                FAQs
+                Returns & Exchanges
+                Shipping & Handling
+                Cancelling or Changing
+                Terms of Service
+                Privacy Policy
+              </pre>
+      
+            </div>
+            <!-- Grid column -->
+      
+            <hr class="clearfix w-100 d-md-none pb-3">
+      
+            <!-- Grid column -->
+            <div class="col-md-6 mb-md-0 mb-3">
+      
+              <!-- Content -->
+              <h5 class="text-uppercase font-weight-bold">Contact Info</h5>
+              <br>
+              <pre>
+                  Contact No: +91 87691-23813
+                  Email: shavitha@gmail.com
+                  Address: 123 Main Street
+                           Anytown, USA 12345
+              </pre>
+      
+            </div>
+            <!-- Grid column -->
+      
+          </div>
+          <!-- Grid row -->
+      
+        </div>
+        <!-- Footer Text -->
+      
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 Copyright:
+          <a href="/">shavusha.com</a>
+        </div>
+        <!-- Copyright -->
+      
+      </footer>
+    <script src="script.js"></script>
+    
+    <script>
+    
+    // Get a reference to the HTML elements
+  const downloadButtons = document.querySelectorAll('.capture-button');
+downloadButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+                    event.preventDefault();
+                            const gridIte = button.closest('#pic');
+        const gridItem =gridIte.querySelector('.image-grid');
+        const imageContainer = gridItem.querySelector('.image-container');
+        const editableImage = imageContainer.querySelector('.image-preview');
+        const imageURL = editableImage.src;
+
+        // Create an anchor element to trigger the download
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.href = imageURL;
+        downloadAnchor.download = 'edited_image.jpg'; // Specify the filename
+
+        // Trigger a click event on the anchor element to initiate the download
+        downloadAnchor.click();
+    });
+});
+
+  
+    
+    const s=document.getElementById('amount');
+    function displayAmount(amount) {
+                event.preventDefault();
+
+     str=amount.split('x')
+    document.getElementById('price').textContent="preferred size: "+amount;
+}
+function changeheight(a) {
+                event.preventDefault();
+  const gridContainer = document.getElementById("grid");
+
+
+  if (a==="square") {
+  
+    gridContainer.style.height = "520px"; // Set the new height
+    s.textContent="Amount: $"+parseInt(str[0])*20;
+  } else {
+    gridContainer.style.height = "350px"; // Set a different height
+        s.textContent="Amount: $"+parseInt(str[0])*30;
+  }
+}
+
+
+var zoomFactor = 1.0; // Initial zoom factor  
+
+function zoomIn() {
+
+    zoomFactor += 0.1; // Increase zoom factor
+    updateZoom();
+}
+
+function zoomOut() {
+
+    if (zoomFactor > 1.0) {
+        zoomFactor -= 0.1; // Decrease zoom factor, but don't go below 1.0
+        updateZoom();
+    }
+}
+function updateZoom() {
+
+    var zoomedImage = document.getElementById("cursorImage");
+    zoomedImage.style.transform = "scale(" + zoomFactor + ")";
+}
+
+//script for add to cart button
+
+document.getElementById("openModalButton").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "block";
+});
+
+// Close the modal
+document.getElementById("closeModal").addEventListener("click", function() {
+    document.getElementById("modal").style.display = "none";
+});
+
+// Close the modal if the user clicks outside the modal
+window.addEventListener("click", function(event) {
+                event.preventDefault();
+    if (event.target == document.getElementById("modal")) {
+        document.getElementById("modal").style.display = "none";
+    }
+});
+
+
+const imageInput = document.getElementById('imageInput');
+const imagePreviews = document.querySelectorAll('.image-preview');
+const price=document.getElementById('price');
+imageInput.addEventListener('change', function () {
+    const file = imageInput.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imagePreviews.forEach((preview) => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            });
+        };
+        reader.readAsDataURL(file);
+    } else {
+        imagePreviews.forEach((preview) => {
+            preview.src = '#';
+            preview.style.display = 'none';
+        });
+    }
+});
+ 
+
+// Function to toggle the 'active' class on button click
+function toggleActive(button) {
+    const buttons = document.querySelectorAll('.button1');
+    buttons.forEach((btn) => btn.classList.remove('active'));
+    button.classList.add('active');
+}
+
+// Add an event listener to each button
+const buttons = document.querySelectorAll('.button1');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        toggleActive(button);
+        const amount = parseInt(button.getAttribute('data-amount'));
+        displayAmount(amount);
+    });
+});
+
+let gMouseDownX = 0;
+let gMouseDownY = 0;
+let gMouseDownOffsetX = 0;
+let gMouseDownOffsetY = 0;
+
+function addListeners() {
+document.getElementById('cursorImage').addEventListener('mousedown', mouseDown, false);
+window.addEventListener('mouseup', mouseUp, false);
+}
+
+function mouseUp() {
+window.removeEventListener('mousemove', divMove, true);
+}
+
+function mouseDown(e) {
+gMouseDownX = e.clientX;
+gMouseDownY = e.clientY;
+
+var div = document.getElementById('cursorImage');
+
+//The following block gets the X offset (the difference between where it starts and where it was clicked)
+let leftPart = "";
+if(!div.style.left)
+leftPart+="0px";    //In case this was not defined as 0px explicitly.
+else
+leftPart = div.style.left;
+let leftPos = leftPart.indexOf("px");
+let leftNumString = leftPart.slice(0, leftPos); // Get the X value of the object.
+gMouseDownOffsetX = gMouseDownX - parseInt(leftNumString,10);
+
+//The following block gets the Y offset (the difference between where it starts and where it was clicked)
+let topPart = "";
+if(!div.style.top)
+topPart+="0px";     //In case this was not defined as 0px explicitly.
+else
+topPart = div.style.top;
+let topPos = topPart.indexOf("px");
+let topNumString = topPart.slice(0, topPos);    // Get the Y value of the object.
+gMouseDownOffsetY = gMouseDownY - parseInt(topNumString,10);
+
+window.addEventListener('mousemove', divMove, true);
+}
+
+function divMove(e){
+var div = document.getElementById('cursorImage');
+div.style.position = 'absolute';
+let topAmount = e.clientY - gMouseDownOffsetY;
+div.style.top = topAmount + 'px';
+let leftAmount = e.clientX - gMouseDownOffsetX;
+div.style.left = leftAmount + 'px';
+}
+
+addListeners();
+    </script>
+</body>
+</html>

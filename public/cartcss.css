@@ -11,11 +11,29 @@ body{
     justify-content: center;
     flex-wrap: wrap;
 }
+.mn36:hover{
+    background-color: green;
+
+}
+.background-container {
+    width:600px;
+    height: 700px; /* Set your desired height */
+    background: url('images/hall-background.jpg') center/cover no-repeat;
+    /* Additional background styles */
+    color: #fff; /* Text color on top of the background image */
+    padding: 20px; /* Add padding for content inside the container */
+    display: flex;
+    justify-content:first baseline;
+    align-items: start;
+    text-align: center;
+  }
+
 .mnn1{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 .mn1{
     display: flex;
@@ -109,6 +127,7 @@ nav a:hover::after {
 .mn31{
     margin-left: 4%;
     margin-top: 3%;
+    padding-right: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,18 +135,20 @@ nav a:hover::after {
 .imgs12{
     border-radius: 10px;
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    
 }
 .mn32 h2{
     font-size: 35px;
     margin-top: 10%;
 }
+
 .mn311{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 .mn33{
+    padding-top: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -177,21 +198,36 @@ nav a:hover::after {
     margin-top: -1%;
     font-size: 14px;
 }
-.btn13{
+.btn13 {
+    position: relative;
     width: 93%;
     height: 50px;
     border-radius: 6px;
     background-color: rgb(255, 187, 0);
     color: rgb(0, 0, 0);
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    transition: 300ms;
+    transition: transform 300ms, background-color 300ms, color 300ms;
     border: none;
-}
-.btn13:hover{
-    transform: scale(1.05);
-    background-color:rgb(255, 187, 0);
+    cursor: pointer;
+  }
+
+  .btn13.clicked {
+    background-color: rgb(72, 201, 33);
     color: rgb(0, 0, 0);
-}
+  }
+
+  .btn13.clicked::after {
+    transform: scale(1.05);
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 6px;
+    z-index: -1;
+  }
 .fn{
     display: flex;
     flex-direction: column;
@@ -277,7 +313,7 @@ nav a:hover::after {
     margin-top: 7%;
     display: flex;
     flex-direction: row;
-    gap: 165px;
+    gap: 125px;
     padding: 0 130px;
     flex-wrap: wrap;
     justify-content: center;
@@ -302,7 +338,7 @@ nav a:hover::after {
 @media screen and (max-width: 600px) {
     .mn311{
         margin-left: 6%;
-        margin-top: -35%;
+        margin-top: 0%;
     }
 }
 @media screen and (max-width: 600px) {
