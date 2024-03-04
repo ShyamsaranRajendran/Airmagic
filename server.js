@@ -32,21 +32,19 @@ const connection = mysql.createConnection({
     database: 'sign_in_data'
 });
 let i;
-// Set up Multer for handling file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, 'img'));
+    cb(null, path.join(__dirname, 'img'));
   },
   filename: (req, file, cb) => {
-    if (req.session.user.username) {
-      // Destroy the session
-      const fileName = req.session.user.username +'.png';
+    if (req.session && req.session.user && req.session.user.username !== null) {
+      // User is authenticated, use username from session
+      const fileName = req.session.user.username + '.png';
       cb(null, fileName);
-     
     } else {
-      res.redirect('/login');
+      // User is not authenticated, set a default filename
+      cb(null, 'default.png'); // Or any other default filename you want to use
     }
-      
   },
 });
 
@@ -59,21 +57,33 @@ app.use('/img', express.static(path.join(__dirname, 'img')));
 app.post('/upload', upload.single('image'), (req, res) => {
   // Access the uploaded file through req.file
   if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
+    return res.status(400).json({ error: 'No file uploaded' });
   }
 
   // Log user name, image name, and date to a log file
-  const logData = `${req.session.user.username} uploaded ${req.file.filename} on ${new Date().toLocaleString()}\n`;
-  fs.appendFile('upload-log.txt', logData, (err) => {
+  if (req.session.user) {
+    const logData = `${req.session.user.username} uploaded ${req.file.filename} on ${new Date().toLocaleString()}\n`;
+    fs.appendFile('upload-log.txt', logData, (err) => {
       if (err) {
-          console.error('Error writing to log file:', err);
+        console.error('Error writing to log file:', err);
       }
-  });
+    });
+  }
 
   // Return a response with the image path
   const imagePath = '/img/' + req.file.filename;
   res.json({ message: 'File uploaded successfully', imagePath });
 });
+
+// Define a route to handle redirection to the login page
+app.use((err, req, res, next) => {
+  if (err && err.message === 'User not authenticated') {
+    res.redirect('/login');
+  } else {
+    next(err);
+  }
+});
+
 // Route to render images matching the current user's username
 app.get('/gallery--1', async (req, res) => {
   try {
